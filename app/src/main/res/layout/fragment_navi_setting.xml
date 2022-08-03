@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".NaviSetting">
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="70dp"
         android:layout_marginBottom="8dp"
         android:background="#00d1ff" />
 
@@ -23,7 +24,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:drawableLeft="@drawable/ic_baseline_settings_24"
             android:fontFamily="@font/nanum_gothic"
             android:text="  설정"
@@ -44,7 +45,10 @@
                 android:layout_height="wrap_content"
                 android:text="앱버전"
                 android:textSize="20dp"
-                android:layout_marginLeft="5dp"/>
+                android:layout_marginLeft="5dp"
+                android:layout_marginBottom="2dp"
+                android:textColor="@color/dark_white"
+                android:fontFamily="@font/nanum_gothic"/>
 
             <ImageView
                 android:layout_width="match_parent"
@@ -55,9 +59,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1.0.0"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:textColor="@color/black"
-                android:layout_margin="20dp"/>
+                android:layout_margin="20dp"
+                android:fontFamily="@font/nanum_gothic"/>
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -67,9 +72,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="약관 및 취급방침"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:layout_margin="20dp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:fontFamily="@font/nanum_gothic"/>
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -79,17 +85,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="개발자 정보"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:layout_margin="20dp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:fontFamily="@font/nanum_gothic"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="문의하기"
+                android:textColor="@color/dark_white"
                 android:textSize="20dp"
                 android:layout_marginLeft="5dp"
-                android:layout_marginTop="30dp"/>
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="2dp"
+                android:fontFamily="@font/nanum_gothic"/>
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
@@ -101,9 +111,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="도움말"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:textColor="@color/black"
-                android:layout_margin="20dp"/>
+                android:layout_margin="20dp"
+                android:fontFamily="@font/nanum_gothic"/>
 
             <ImageView
                 android:layout_width="match_parent"
@@ -114,21 +125,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="고객센터"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:layout_margin="20dp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:fontFamily="@font/nanum_gothic"/>
 
 
             <Button
                 android:id="@+id/logOut"
-                android:layout_width="100dp"
-                android:layout_height="90dp"
+                android:layout_width="120dp"
+                android:layout_height="70dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="80dp"
                 android:fontFamily="@font/nanum_gothic_bold"
                 android:text="로그아웃"
                 android:textAlignment="center"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:background="@drawable/btn_blue"/>
         </LinearLayout>
 
     </LinearLayout>

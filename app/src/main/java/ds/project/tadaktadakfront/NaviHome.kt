@@ -3,6 +3,7 @@ package ds.project.tadaktadakfront
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
@@ -17,7 +18,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.google.firebase.storage.FirebaseStorage
 import com.yanzhenjie.permission.AndPermission
 import com.yanzhenjie.permission.FileProvider
 import com.yanzhenjie.permission.runtime.Permission
@@ -28,6 +32,7 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.Collections.rotate
+import java.util.jar.Manifest
 
 
 private const val ARG_PARAM1 = "param1"
@@ -42,6 +47,7 @@ class NaviHome : Fragment() {
     var uri: Uri? = null //원본이미지 Uri를 저장할 변수
     lateinit var mContext: Context
     lateinit var currentPhotoPath: String //imagePath
+    var fbStorage : FirebaseStorage? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,6 +80,7 @@ class NaviHome : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_navi_home, container, false)
+        fbStorage = FirebaseStorage.getInstance()
 
         view.btnCamera.setOnClickListener {
             takePhoto()
@@ -195,6 +202,11 @@ class NaviHome : Fragment() {
                                 )
                             select_ImageView.setImageBitmap(bitmap)
                             currentPhotoPath= Uri.parse(data!!.dataString).toString()
+                            if(ContextCompat.checkSelfPermission(requireView().context,
+                                    Permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED ){
+                                funImageUpload(requireView()) //파이어베이스 저장 함수
+                            }
+
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }
@@ -245,6 +257,20 @@ class NaviHome : Fragment() {
         matrix.postRotate(degree.toFloat())
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
     }
+
+    private fun funImageUpload(view : View){
+
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        var imgFileName = "IMAGE_" + timeStamp + "_.jpg"
+        var storageRef = fbStorage?.reference?.child("images")?.child(imgFileName)
+
+        storageRef?.putFile(uri!!)?.addOnSuccessListener {
+            Toast.makeText(view.context, "Image Uploaded", Toast.LENGTH_SHORT).show()
+        }
+
+    }
+
+
 
 
     companion object {
