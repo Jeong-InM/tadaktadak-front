@@ -1,7 +1,12 @@
 package ds.project.tadaktadakfront
 
 import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Base64.DEFAULT
+import android.util.Base64.encodeToString
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -23,6 +28,8 @@ import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
 import java.util.*
 
 
@@ -127,16 +134,15 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun facebookLogin(){
-        // 페이스북에서 받을 권한 요청 - 프로필 이미지, 이메일
         LoginManager.getInstance()
-            .logInWithReadPermissions(this, Arrays.asList("public_profile", "email"))
-        // LoginResult : 페이스북 로그인이 최종 성공했을 때 넘어오는 부분
+            .logInWithReadPermissions(this, Arrays.asList("email"))
+
         LoginManager.getInstance()
-            .registerCallback(callbackManager, object : FacebookCallback<LoginResult>{
+            .registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
                 override fun onSuccess(result: LoginResult?) {
-                    // Second step
-                    // 로그인이 성공하면 페이스북 데이터를 파이어베이스에 넘기는 함수
+                    // 로그인 성공시
                     handleFacebookAccessToken(result?.accessToken)
+                    // 파이어베이스로 로그인 데이터를 넘겨줌
                 }
 
                 override fun onCancel() {
@@ -158,6 +164,7 @@ class LoginActivity : AppCompatActivity() {
                     // Login, 아이디와 패스워드가 맞았을 때
 //                    Toast.makeText(this,  "success", Toast.LENGTH_LONG).show()
                     moveMainPage(task.result?.user)
+                    Toast.makeText(this,"로그인 성공",Toast.LENGTH_SHORT).show()
                 } else {
                     // Show the error message, 아이디와 패스워드가 틀렸을 때
                     Toast.makeText(this, task.exception?.message, Toast.LENGTH_LONG).show()
