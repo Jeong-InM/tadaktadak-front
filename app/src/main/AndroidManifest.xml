@@ -17,6 +17,7 @@
         <provider android:authorities="ds.project.tadaktadakfront.fileprovider" />
     </queries>
 
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -26,6 +27,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Tadaktadak_front"
         android:usesCleartextTraffic="true">
+
+
 
         <activity
             android:name=".SplashActivity"
@@ -39,14 +42,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".LoginActivity.LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.Tadaktadak_front"/>
         <activity
-            android:name=".SignUpActivity"
+            android:name=".LoginActivity.SignUpActivity"
             android:exported="true" />
         <activity
-            android:name=".FindPassActivity"
+            android:name=".LoginActivity.FindPassActivity"
             android:exported="true" />
         <activity
             android:name=".MainActivity"
@@ -54,9 +57,7 @@
         <activity
             android:name=".SetImageActivity"
             android:exported="true" />
-        <activity
-            android:name=".mlActivity"
-            android:exported="true" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="ds.project.tadaktadakfront.fileprovider"

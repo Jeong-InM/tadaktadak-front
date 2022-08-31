@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/Jeong-InM/fragment-activity/issues"
   },
-  "homepage": "https://github.com/Jeong-InM/fragment-activity#readme"
+  "homepage": "https://github.com/Jeong-InM/fragment-activity#readme",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "firebase-admin": "^11.0.1"
+  }
 }
