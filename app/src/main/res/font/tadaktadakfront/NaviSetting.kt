@@ -1,13 +1,16 @@
 package ds.project.tadaktadakfront
 
-
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.Button
 import androidx.fragment.app.Fragment
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import ds.project.tadaktadakfront.LoginActivity.LoginActivity
 //import com.kakao.sdk.user.UserApiClient
 import kotlinx.android.synthetic.main.fragment_navi_setting.view.*
 
@@ -16,12 +19,11 @@ import kotlinx.android.synthetic.main.fragment_navi_setting.view.*
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [NaviSetting.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class NaviSetting : Fragment() {
+    private var auth: FirebaseAuth? = null
+
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -38,33 +40,29 @@ class NaviSetting : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_navi_setting, container, false)
         // Inflate the layout for this fragment
+        val view = inflater.inflate(R.layout.fragment_navi_setting, container, false)
+        auth = Firebase.auth
+        //로그아웃 버튼
+        view.logOut.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(p0: View?) {
+                val logout = getView()?.findViewById<Button>(R.id.logOut)
+                logout?.setOnClickListener {//로그인 화면으로
 
-        view.logOut.setOnClickListener{
-            val TAG="kakaologin"
-            Toast.makeText(requireActivity(), "정상적으로 로그아웃되었습니다.", Toast.LENGTH_SHORT).show()
-            /*UserApiClient.instance.logout { error ->
-                if (error != null) {
-                    Log.e(TAG, "로그아웃 실패. SDK에서 토큰 삭제됨", error)
+                    val intent = Intent(activity, LoginActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    activity!!.startActivity(intent)
+                    auth?.signOut()
                 }
-                else {
-                    Log.i(TAG, "로그아웃 성공. SDK에서 토큰 삭제됨")
-                }
-            }*/
-        }
+            }
+        })
+
+
         return view
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment NaviSetting.
-         */
+
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =

@@ -118,15 +118,15 @@
         android:textColor="@color/black" />
 
     <android.widget.Button
-        android:id="@+id/btn_facebook"
+        android:id="@+id/btn_kakao"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/btn_stroke"
-        android:drawableLeft="@drawable/facebook"
+        android:drawableLeft="@drawable/kakao"
         android:paddingLeft="100dp"
         android:paddingRight="100dp"
-        android:text="페이스북으로 로그인"
+        android:text="카카오톡으로 로그인"
         android:textColor="@color/black" />
 
 

@@ -23,5 +23,6 @@
         android:padding="10dp"
         android:text="@string/setimage_activity_text"
         android:textColor="@color/black"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        tools:ignore="Deprecated" />
 </LinearLayout>
