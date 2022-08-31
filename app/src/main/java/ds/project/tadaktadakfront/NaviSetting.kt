@@ -42,7 +42,7 @@ class NaviSetting : Fragment() {
         // Inflate the layout for this fragment
 
         view.logOut.setOnClickListener{
-            val TAG="kakaologin"
+
             Toast.makeText(requireActivity(), "정상적으로 로그아웃되었습니다.", Toast.LENGTH_SHORT).show()
             /*UserApiClient.instance.logout { error ->
                 if (error != null) {

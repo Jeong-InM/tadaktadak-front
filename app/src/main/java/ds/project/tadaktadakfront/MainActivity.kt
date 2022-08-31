@@ -2,16 +2,25 @@ package ds.project.tadaktadakfront
 
 import android.os.Bundle
 import android.widget.FrameLayout
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import ds.project.tadaktadakfront.ContractCollection.Contract
+import ds.project.tadaktadakfront.ContractCollection.ContractAdapter
+import ds.project.tadaktadakfront.ContractCollection.ContractViewModel
+import kotlinx.android.synthetic.main.fragment_navi_contract_collection.*
 
 
 class MainActivity : AppCompatActivity() {
     private val fl: FrameLayout by lazy {
         findViewById(R.id.fl_container)
     }
+    private lateinit var contractViewModel: ContractViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,14 +44,15 @@ class MainActivity : AppCompatActivity() {
                         bnv_main.itemTextColor =
                             ContextCompat.getColorStateList(this, R.color.color_bnv1)
                         NaviContractCollection()
-                        // Respond to navigation item 2 click
+
+
                     }
                     R.id.third -> {
                         bnv_main.itemIconTintList =
                             ContextCompat.getColorStateList(this, R.color.color_bnv1)
                         bnv_main.itemTextColor =
                             ContextCompat.getColorStateList(this, R.color.color_bnv1)
-                        NaviChatBot()
+                        NaviChatbot()
                         // Respond to navigation item 3 click
                     }
                     else -> {
