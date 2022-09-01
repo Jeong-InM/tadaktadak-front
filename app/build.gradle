@@ -37,6 +37,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+        freeCompilerArgs += [
+                "-Xjvm-default=all",
+        ]
     }
     buildFeatures {
         viewBinding true
@@ -66,11 +69,19 @@ dependencies {
     // room
     implementation"androidx.room:room-runtime:2.4.3"
     annotationProcessor"androidx.room:room-compiler:2.4.3"
+    androidTestImplementation "androidx.room:room-testing:2.2.5"
     kapt"androidx.room:room-compiler:2.4.3"
+    implementation"androidx.room:room-ktx:2.4.3"
 
-    // livedata
-    implementation 'android.arch.lifecycle:extensions:1.1.1'
-    kapt 'android.arch.lifecycle:compiler:1.1.1'
+    // livecycle components
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"
+    implementation "androidx.lifecycle:lifecycle-common-java8:2.5.1"
+
+    //Kotlin components
+    implementation"org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9"
+
+
 
 
     //이미지처리 글라이드

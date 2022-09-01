@@ -1,4 +1,4 @@
-package ds.project.tadaktadakfront.ContractCollection
+package ds.project.tadaktadakfront.contract_collection.model.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -17,4 +17,9 @@ data class Contract(
 
     @ColumnInfo(name = "initial")
     var initial: Char
-)
+){
+
+    constructor(): this(null, "", "", '\u0000')
+}
+
+

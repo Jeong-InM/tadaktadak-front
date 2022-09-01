@@ -3,16 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.1245" />
         <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/layout/activity_chatbot.xml" value="0.1346328195829556" />
         <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/layout/activity_contract_add.xml" value="0.264" />
         <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/layout/activity_set_image.xml" value="0.18854166666666666" />
         <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/layout/adapter_message_one.xml" value="0.13852073535699017" />
         <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/layout/fragment_navi_chat_bot.xml" value="0.2" />
-        <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/layout/fragment_navi_contract_collection.xml" value="0.2" />
+        <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/layout/fragment_navi_contract_collection.xml" value="0.1" />
         <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/layout/fragment_navi_home.xml" value="0.4" />
         <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/layout/fragment_navi_setting.xml" value="0.13852073535699017" />
-        <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/layout/item_contract.xml" value="0.264" />
+        <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/layout/item_contract.xml" value="0.1" />
+        <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/layout/test.xml" value="0.13852073535699017" />
         <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/menu/navi_menu.xml" value="0.1" />
         <entry key="..\:/Users/user/Downloads/chatbot-master/app/src/main/res/layout/fragment_navi_chat_bot.xml" value="0.1921875" />
         <entry key="..\:/fragment-activity/app/src/main/res/drawable/bg_chat_receive.xml" value="0.1" />

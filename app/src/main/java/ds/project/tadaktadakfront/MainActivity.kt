@@ -2,18 +2,11 @@ package ds.project.tadaktadakfront
 
 import android.os.Bundle
 import android.widget.FrameLayout
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import ds.project.tadaktadakfront.ContractCollection.Contract
-import ds.project.tadaktadakfront.ContractCollection.ContractAdapter
-import ds.project.tadaktadakfront.ContractCollection.ContractViewModel
-import kotlinx.android.synthetic.main.fragment_navi_contract_collection.*
+import ds.project.tadaktadakfront.contract_collection.viewmodel.ContractViewModel
 
 
 class MainActivity : AppCompatActivity() {

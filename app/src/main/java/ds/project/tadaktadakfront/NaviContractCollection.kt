@@ -1,23 +1,27 @@
 package ds.project.tadaktadakfront
 
 import android.annotation.SuppressLint
+import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import androidx.appcompat.app.AlertDialog
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ds.project.tadaktadakfront.ContractCollection.Contract
-import ds.project.tadaktadakfront.ContractCollection.ContractAdapter
-import ds.project.tadaktadakfront.ContractCollection.ContractViewModel
-import ds.project.tadaktadakfront.ContractCollection.Contract_Add
-import kotlinx.android.synthetic.main.fragment_navi_contract_collection.*
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import ds.project.tadaktadakfront.contract_collection.Contract_Add
+import ds.project.tadaktadakfront.contract_collection.model.entity.Contract
+import ds.project.tadaktadakfront.contract_collection.view.adapter.ContractAdapter
+import ds.project.tadaktadakfront.contract_collection.viewmodel.ContractViewModel
+import ds.project.tadaktadakfront.contract_collection.viewmodel.ContractViewModelFactory
 import kotlinx.android.synthetic.main.fragment_navi_contract_collection.view.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -34,7 +38,17 @@ class NaviContractCollection : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private lateinit var contractViewModel: ContractViewModel
+
+
+    // 1. Context를 할당할 변수를 프로퍼티로 선언(어디서든 사용할 수 있게)
+    lateinit var mainActivity: MainActivity
+
+
+    private val contractViewModel: ContractViewModel by viewModels {
+        ContractViewModelFactory((activity?.application as ContractApplication).repository)
+    }
+
+    private lateinit var getResult: ActivityResultLauncher<Intent>
 
 
 
@@ -54,62 +68,46 @@ class NaviContractCollection : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_navi_contract_collection, container, false)
 
-        // Set contractItemClick & contractItemLongClick lambda
+        val recyclerView = view.findViewById<RecyclerView>(R.id.contract_recyclerview)
+        val adapter = ContractAdapter()
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(context)
 
-        val adapter = ContractAdapter({ contract ->
-            val intent = Intent(context, Contract_Add::class.java)
-            intent.putExtra(Contract_Add.EXTRA_CONTRACT_NAME, contract.name)
-            intent.putExtra(Contract_Add.EXTRA_CONTRACT_NUMBER, contract.number)
-            intent.putExtra(Contract_Add.EXTRA_CONTRACT_ID, contract.id)
-            startActivity(intent)
-        }, { contract ->
-            deleteDialog(contract)
+        contractViewModel.contracts.observe(this, Observer { contracts ->
+            contracts.let { adapter.submitList(it) }
         })
 
+        getResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == RESULT_OK) {
+                val name: String = it.data?.getStringExtra("name").toString()
+                val number: String = it.data?.getStringExtra("number").toString()
 
-
-        val lm = LinearLayoutManager(context)
-
-        val mrecycleview = getView()?.findViewById<RecyclerView>(R.id.main_recycleview)
-
-
-        mrecycleview?.adapter = adapter
-        mrecycleview?.layoutManager = lm
-        mrecycleview?.setHasFixedSize(true)
-
-        contractViewModel = ViewModelProviders.of(this).get(ContractViewModel::class.java)
-        contractViewModel.getAll().observe(viewLifecycleOwner, Observer<List<Contract>> { contracts ->
-            adapter.setContracts(contracts!!)
-        })
-
-
-        view.main_button.setOnClickListener (object : View.OnClickListener {
+                val contract = Contract(name, number)
+                contractViewModel.insert(contract)
+            } else {
+                Toast.makeText(activity, "empty not saved", Toast.LENGTH_SHORT).show()
+            }
+        }
+        view.add_button.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
-                val add = getView()?.findViewById<Button>(R.id.main_button)
-                add?.setOnClickListener{
+                val addButton = getView()?.findViewById<FloatingActionButton>(R.id.add_button)
+                addButton?.setOnClickListener {
                     val intent = Intent(activity, Contract_Add::class.java)
-                    startActivity(intent)
+                    getResult.launch(intent)
                 }
             }
-
         })
-
-
 
         return view
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
 
-
-    private fun deleteDialog(contract: Contract) {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setMessage("Delete selected contract?")
-            .setNegativeButton("NO") { _, _ -> }
-            .setPositiveButton("YES") { _, _ ->
-                contractViewModel.delete(contract)
-            }
-        builder.show()
+        // 2. Context를 액티비티로 형변환해서 할당
+        mainActivity = context as MainActivity
     }
+
 
     companion object {
 
