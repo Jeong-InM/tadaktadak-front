@@ -61,8 +61,7 @@
         <activity android:name=".chatbot.ChatbotActivity"
             android:exported="true"/>
 
-        <activity android:name=".ContractCollection.Contract_Add"
-            android:exported="true"/>
+
 
         <provider
             android:name="androidx.core.content.FileProvider"
