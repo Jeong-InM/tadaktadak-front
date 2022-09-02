@@ -6,14 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import ds.project.tadaktadakfront.contract_collection.viewmodel.ContractViewModel
 
 
 class MainActivity : AppCompatActivity() {
     private val fl: FrameLayout by lazy {
         findViewById(R.id.fl_container)
     }
-    private lateinit var contractViewModel: ContractViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
