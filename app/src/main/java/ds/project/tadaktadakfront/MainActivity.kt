@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
                             ContextCompat.getColorStateList(this, R.color.color_bnv1)
                         NaviSetting()
                     }
-                }
+                } as Fragment
             )
             true
         }

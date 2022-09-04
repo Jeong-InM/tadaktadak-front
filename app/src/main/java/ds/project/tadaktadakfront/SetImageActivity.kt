@@ -1,12 +1,16 @@
 ﻿package ds.project.tadaktadakfront
 
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.TextUtils
 import android.util.Log
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -35,10 +39,10 @@ class SetImageActivity : AppCompatActivity() {
 
         val currentPhotoPath: String? = intent.getStringExtra("path")
         val uriSelected = Uri.parse(intent.getStringExtra("path"))
-        val uri:Uri =  File(currentPhotoPath).toUri()
+        val uri: Uri = File(currentPhotoPath).toUri()
         Log.v("tag", "successI")
 
-        val imageView: ImageView=findViewById(R.id.set_iv)
+        val imageView: ImageView = findViewById(R.id.set_iv)
         Glide.with(this@SetImageActivity)
             .load(currentPhotoPath)
             .error(ColorDrawable(Color.RED))
@@ -54,8 +58,21 @@ class SetImageActivity : AppCompatActivity() {
             Log.v("tag", "successT")
 
 
-
         }, 2000)
+
+        val button = findViewById<Button>(R.id.button_save)
+        button.setOnClickListener {
+            val replyIntent = Intent()
+            if (TextUtils.isEmpty(textView.toString())) {
+                setResult(Activity.RESULT_CANCELED, replyIntent)
+            } else {
+                val content = textView.text.toString()
+                replyIntent.putExtra(EXTRA_REPLY, content)
+                setResult(Activity.RESULT_OK, replyIntent)
+            }
+            finish()
+        }
+
 
 
     } // end onCreate
@@ -79,4 +96,9 @@ class SetImageActivity : AppCompatActivity() {
         }
     }
 
-}
+        companion object {
+            const val EXTRA_REPLY = "ds.project.tadaktadakfront.contractlistsql.REPLY"
+
+        }
+    }
+

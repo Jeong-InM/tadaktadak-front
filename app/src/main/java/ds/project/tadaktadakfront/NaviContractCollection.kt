@@ -1,7 +1,6 @@
 package ds.project.tadaktadakfront
 
-import android.annotation.SuppressLint
-import android.app.Activity.RESULT_OK
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -9,14 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_navi_contract_collection.view.*
+import ds.project.tadaktadakfront.contracts.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,6 +29,11 @@ class NaviContractCollection : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    lateinit var mainActivity: MainActivity
+    private val newcontractActivityRequestCode = 1
+    private val contractViewModel: ContractViewModel by viewModels {
+        ContractViewModelFactory((mainActivity.application as ContractsApplication).repository)
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +50,38 @@ class NaviContractCollection : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_navi_contract_collection, container, false)
 
+        val recyclerView : RecyclerView= view.findViewById(R.id.recyclerview)
+        val adapter = ContractListAdapter()
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(activity?.applicationContext)
+
+        contractViewModel.allContracts.observe(viewLifecycleOwner) { contracts ->
+            contracts.let { adapter.submitList(it) }
+        }
+
         return view
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
+        super.onActivityResult(requestCode, resultCode, intentData)
+
+        if (requestCode == newcontractActivityRequestCode && resultCode == Activity.RESULT_OK) {
+            intentData?.getStringExtra(SetImageActivity.EXTRA_REPLY)?.let { reply ->
+                val contract = Contract(reply)
+                contractViewModel.insert(contract)
+            }
+        } else {
+            Toast.makeText(
+                mainActivity.applicationContext,
+                R.string.empty_not_saved,
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
+    override fun onAttach(context: Context) { //메인 context 자유롭게 사용
+        super.onAttach(context)
+        mainActivity=context as MainActivity
     }
 
 

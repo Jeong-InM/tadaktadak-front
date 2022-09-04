@@ -22,7 +22,16 @@
         android:background="@color/light_blue"
         android:padding="10dp"
         android:text="@string/setimage_activity_text"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="20sp"
         tools:ignore="Deprecated" />
+
+    <Button
+        android:id="@+id/button_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_resource"
+        android:text="@string/button_save"
+        android:layout_margin="@dimen/big_padding"
+        android:textColor="@color/buttonLabel" />
 </LinearLayout>
