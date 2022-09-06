@@ -9,11 +9,11 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ContractDao {
 
-    @Query("SELECT * FROM contract ORDER BY content ASC")
+    @Query("SELECT * FROM contract ORDER BY name ASC")
     fun getAlphabetizedWords(): Flow<List<Contract>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(content: Contract)
+    suspend fun insert(contract: Contract)
 
     @Query("DELETE FROM contract")
     suspend fun deleteAll()

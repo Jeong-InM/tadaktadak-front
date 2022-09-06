@@ -11,6 +11,7 @@
         <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/drawable/btn_chatbot.xml" value="0.1375" />
         <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/drawable/chatbot_icon.xml" value="0.1375" />
         <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/drawable/chatbot_resource.xml" value="0.186" />
+        <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/drawable/contract_stroke.xml" value="0.166" />
         <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/drawable/google.xml" value="0.15" />
         <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.1245" />
         <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/drawable/ic_baseline_send_24.xml" value="0.15" />
@@ -22,16 +23,16 @@
         <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/layout/activity_contract_add.xml" value="0.264" />
         <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/layout/activity_main.xml" value="0.13852073535699017" />
-        <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/layout/activity_set_image.xml" value="0.18854166666666666" />
+        <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/layout/activity_set_image.xml" value="0.264" />
         <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/layout/activity_splash.xml" value="0.13852073535699017" />
         <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/layout/adapter_message_one.xml" value="0.13852073535699017" />
-        <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/layout/content_contract.xml" value="0.13852073535699017" />
+        <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/layout/content_contract.xml" value="0.264" />
         <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/layout/fragment_navi_chat_bot.xml" value="0.264" />
-        <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/layout/fragment_navi_contract_collection.xml" value="0.1" />
+        <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/layout/fragment_navi_contract_collection.xml" value="0.264" />
         <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/layout/fragment_navi_home.xml" value="0.1" />
         <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/layout/fragment_navi_setting.xml" value="0.2" />
         <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/layout/item_contract.xml" value="0.1" />
-        <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/layout/recyclerview_item.xml" value="0.13852073535699017" />
+        <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/layout/recyclerview_item.xml" value="0.264" />
         <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/layout/test.xml" value="0.13852073535699017" />
         <entry key="..\:/Program Files/AndroidStudioProjects/app/src/main/res/menu/navi_menu.xml" value="0.1" />
         <entry key="..\:/Users/user/Downloads/chatbot-master/app/src/main/res/layout/fragment_navi_chat_bot.xml" value="0.1921875" />

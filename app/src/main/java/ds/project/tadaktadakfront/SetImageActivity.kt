@@ -11,6 +11,7 @@ import android.os.Looper
 import android.text.TextUtils
 import android.util.Log
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -34,7 +35,6 @@ class SetImageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_set_image)
-
         textRecognizer = TextRecognition.getClient(KoreanTextRecognizerOptions.Builder().build())
 
         val currentPhotoPath: String? = intent.getStringExtra("path")
@@ -59,20 +59,28 @@ class SetImageActivity : AppCompatActivity() {
 
 
         }, 2000)
+        var nameEditText=findViewById<EditText>(R.id.add_edittext_name)
+        var numberEditText=findViewById<EditText>(R.id.add_edittext_number)
+        var addressEditText=findViewById<EditText>(R.id.add_edittext_address)
 
         val button = findViewById<Button>(R.id.button_save)
         button.setOnClickListener {
             val replyIntent = Intent()
-            if (TextUtils.isEmpty(textView.toString())) {
+            if (TextUtils.isEmpty(numberEditText.toString())) {
                 setResult(Activity.RESULT_CANCELED, replyIntent)
             } else {
-                val content = textView.text.toString()
-                replyIntent.putExtra(EXTRA_REPLY, content)
+                val bundle=Bundle()
+
+                bundle.putString("name", nameEditText.getText().toString())
+                bundle.putString("number", numberEditText.getText().toString())
+                bundle.putString("address", addressEditText.getText().toString())
+
+                val navi=NaviContractCollection()
+                navi.arguments=(bundle)
                 setResult(Activity.RESULT_OK, replyIntent)
             }
             finish()
         }
-
 
 
     } // end onCreate

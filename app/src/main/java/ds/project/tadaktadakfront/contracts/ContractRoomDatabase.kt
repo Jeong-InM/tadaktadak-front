@@ -9,7 +9,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@Database(entities = arrayOf(Contract::class), version = 1, exportSchema = false)
+@Database(entities = arrayOf(Contract::class), version = 2, exportSchema = false)
 abstract class ContractRoomDatabase : RoomDatabase() {
 
     abstract fun contractDao(): ContractDao
@@ -53,10 +53,8 @@ abstract class ContractRoomDatabase : RoomDatabase() {
         suspend fun populateDatabase(contractDao: ContractDao) {
             contractDao.deleteAll()
 
-            var content = Contract("Hello")
-            contractDao.insert(content)
-            content = Contract("World!")
-            contractDao.insert(content)
+            var contract = Contract(null,"타닥타닥", "1234-5678", "서울시 도봉구 삼양로 144길 33 덕성여자대학교")
+            contractDao.insert(contract)
         }
     }
 }

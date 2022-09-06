@@ -66,10 +66,12 @@ class NaviContractCollection : Fragment() {
         super.onActivityResult(requestCode, resultCode, intentData)
 
         if (requestCode == newcontractActivityRequestCode && resultCode == Activity.RESULT_OK) {
-            intentData?.getStringExtra(SetImageActivity.EXTRA_REPLY)?.let { reply ->
-                val contract = Contract(reply)
-                contractViewModel.insert(contract)
-            }
+            val name: String = arguments?.getString("name").toString()
+            val number: String = arguments?.getString("number").toString()
+            val address: String = arguments?.getString("address").toString()
+
+            val contract = Contract(null, name, number, address)
+            contractViewModel.insert(contract)
         } else {
             Toast.makeText(
                 mainActivity.applicationContext,

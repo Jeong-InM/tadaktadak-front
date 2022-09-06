@@ -17,14 +17,18 @@ class ContractListAdapter : ListAdapter<Contract, ContractListAdapter.ContractVi
 
     override fun onBindViewHolder(holder: ContractViewHolder, position: Int) {
        val current = getItem(position)
-        holder.bind(current.content)
+        holder.bind(current)
     }
 
     class ContractViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        private val ContractItemView: TextView =itemView.findViewById(R.id.textView)
+        private val nameTv = itemView.findViewById<TextView>(R.id.item_tv_name)
+        private val numberTv = itemView.findViewById<TextView>(R.id.item_tv_number)
+        private val addressTv = itemView.findViewById<TextView>(R.id.item_tv_address)
 
-        fun bind(text: String?){
-            ContractItemView.text = text
+        fun bind(contract: Contract){
+            nameTv.text = contract.name
+            numberTv.text=contract.number
+            addressTv.text=contract.address
         }
         companion object {
             fun create(parent: ViewGroup): ContractViewHolder {
@@ -42,7 +46,7 @@ class ContractListAdapter : ListAdapter<Contract, ContractListAdapter.ContractVi
             }
 
             override fun areContentsTheSame(oldItem: Contract, newItem: Contract): Boolean {
-                return oldItem.content == newItem.content
+                return oldItem.number == newItem.number
             }
         }
     }
