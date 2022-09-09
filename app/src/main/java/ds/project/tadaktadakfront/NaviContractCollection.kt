@@ -1,8 +1,6 @@
 package ds.project.tadaktadakfront
 
-import android.annotation.SuppressLint
-import android.app.Activity.RESULT_OK
-import android.content.Context
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,10 +11,11 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_navi_contract_collection.view.*
+import ds.project.tadaktadakfront.contracts.*
+import kotlinx.android.synthetic.main.recyclerview_item.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,12 +32,17 @@ class NaviContractCollection : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private val contractViewModel: ContractViewModel by viewModels {
+        ContractViewModelFactory((activity?.application as ContractsApplication).repository)
+    }
+    private lateinit var getResult: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
+
         }
     }
 
@@ -48,8 +52,34 @@ class NaviContractCollection : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_navi_contract_collection, container, false)
 
+        val recyclerView : RecyclerView= view.findViewById(R.id.recyclerview)
+        val adapter = ContractListAdapter()
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(activity?.applicationContext)
+
+        contractViewModel.allContracts.observe(viewLifecycleOwner) { contracts ->
+            contracts.let { adapter.submitList(it) }
+        }
+
+        getResult=registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+
+            if (it.resultCode == Activity.RESULT_OK) {
+
+                val name: String = it.data?.getStringExtra("name").toString()
+                val number: String = it.data?.getStringExtra("number").toString()
+                val address: String = it.data?.getStringExtra("address").toString()
+
+                val contract = Contract(null, name, number, address)
+                contractViewModel.insert(contract)
+
+            } else {
+                Toast.makeText(activity?.applicationContext, "empty not saved", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         return view
     }
+
 
 
     companion object {

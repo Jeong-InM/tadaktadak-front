@@ -1,12 +1,17 @@
 ﻿package ds.project.tadaktadakfront
 
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.TextUtils
 import android.util.Log
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -35,10 +40,10 @@ class SetImageActivity : AppCompatActivity() {
 
         val currentPhotoPath: String? = intent.getStringExtra("path")
         val uriSelected = Uri.parse(intent.getStringExtra("path"))
-        val uri:Uri =  File(currentPhotoPath).toUri()
+        val uri: Uri = File(currentPhotoPath).toUri()
         Log.v("tag", "successI")
 
-        val imageView: ImageView=findViewById(R.id.set_iv)
+        val imageView: ImageView = findViewById(R.id.set_iv)
         Glide.with(this@SetImageActivity)
             .load(currentPhotoPath)
             .error(ColorDrawable(Color.RED))
@@ -54,11 +59,32 @@ class SetImageActivity : AppCompatActivity() {
             Log.v("tag", "successT")
 
 
-
         }, 2000)
 
+        var nameEditText=findViewById<EditText>(R.id.add_edittext_name)
+        var numberEditText=findViewById<EditText>(R.id.add_edittext_number)
+        var addressEditText=findViewById<EditText>(R.id.add_edittext_address)
 
-    } // end onCreate
+        val saveButton = findViewById<Button>(R.id.button_save)
+        saveButton.setOnClickListener {
+            val replyIntent = Intent()
+            if (TextUtils.isEmpty(numberEditText.text)) {
+                setResult(Activity.RESULT_CANCELED, replyIntent)
+            } else {
+                val name = nameEditText.text.toString()
+                val number = numberEditText.text.toString()
+                val address= addressEditText.text.toString()
+
+                replyIntent.putExtra("name", name)
+                replyIntent.putExtra("number", number)
+                replyIntent.putExtra("address", address)
+                setResult(Activity.RESULT_OK, replyIntent)
+            }
+            finish()
+        }
+    }
+
+
 
     private fun convertImagetoText(imageUri: Uri?) {
         try {
@@ -77,6 +103,9 @@ class SetImageActivity : AppCompatActivity() {
         } catch (e: Exception) {
 
         }
+
+
     }
 
-}
+    }
+

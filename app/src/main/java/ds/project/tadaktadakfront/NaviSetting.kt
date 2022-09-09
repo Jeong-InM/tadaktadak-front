@@ -1,13 +1,18 @@
 package ds.project.tadaktadakfront
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import ds.project.tadaktadakfront.LoginActivity.LoginActivity
 //import com.kakao.sdk.user.UserApiClient
 import kotlinx.android.synthetic.main.fragment_navi_setting.view.*
 
@@ -39,20 +44,20 @@ class NaviSetting : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_navi_setting, container, false)
+        val auth = Firebase.auth
         // Inflate the layout for this fragment
 
-        view.logOut.setOnClickListener{
-
-            Toast.makeText(requireActivity(), "정상적으로 로그아웃되었습니다.", Toast.LENGTH_SHORT).show()
-            /*UserApiClient.instance.logout { error ->
-                if (error != null) {
-                    Log.e(TAG, "로그아웃 실패. SDK에서 토큰 삭제됨", error)
+        view.logOut.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(p0: View?) {
+                val logout = getView()?.findViewById<Button>(R.id.logOut)
+                logout?.setOnClickListener {//로그인 화면으로
+                    val intent = Intent(activity, LoginActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    activity!!.startActivity(intent)
+                    auth?.signOut()
                 }
-                else {
-                    Log.i(TAG, "로그아웃 성공. SDK에서 토큰 삭제됨")
-                }
-            }*/
-        }
+            }
+        })
         return view
     }
 
