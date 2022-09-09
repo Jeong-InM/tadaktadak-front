@@ -35,6 +35,7 @@ class SetImageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_set_image)
+
         textRecognizer = TextRecognition.getClient(KoreanTextRecognizerOptions.Builder().build())
 
         val currentPhotoPath: String? = intent.getStringExtra("path")
@@ -59,31 +60,31 @@ class SetImageActivity : AppCompatActivity() {
 
 
         }, 2000)
+
         var nameEditText=findViewById<EditText>(R.id.add_edittext_name)
         var numberEditText=findViewById<EditText>(R.id.add_edittext_number)
         var addressEditText=findViewById<EditText>(R.id.add_edittext_address)
 
-        val button = findViewById<Button>(R.id.button_save)
-        button.setOnClickListener {
+        val saveButton = findViewById<Button>(R.id.button_save)
+        saveButton.setOnClickListener {
             val replyIntent = Intent()
-            if (TextUtils.isEmpty(numberEditText.toString())) {
+            if (TextUtils.isEmpty(numberEditText.text)) {
                 setResult(Activity.RESULT_CANCELED, replyIntent)
             } else {
-                val bundle=Bundle()
+                val name = nameEditText.text.toString()
+                val number = numberEditText.text.toString()
+                val address= addressEditText.text.toString()
 
-                bundle.putString("name", nameEditText.getText().toString())
-                bundle.putString("number", numberEditText.getText().toString())
-                bundle.putString("address", addressEditText.getText().toString())
-
-                val navi=NaviContractCollection()
-                navi.arguments=(bundle)
+                replyIntent.putExtra("name", name)
+                replyIntent.putExtra("number", number)
+                replyIntent.putExtra("address", address)
                 setResult(Activity.RESULT_OK, replyIntent)
             }
             finish()
         }
+    }
 
 
-    } // end onCreate
 
     private fun convertImagetoText(imageUri: Uri?) {
         try {
@@ -102,11 +103,9 @@ class SetImageActivity : AppCompatActivity() {
         } catch (e: Exception) {
 
         }
+
+
     }
 
-        companion object {
-            const val EXTRA_REPLY = "ds.project.tadaktadakfront.contractlistsql.REPLY"
-
-        }
     }
 

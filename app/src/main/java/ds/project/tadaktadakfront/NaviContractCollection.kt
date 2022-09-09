@@ -1,19 +1,21 @@
 package ds.project.tadaktadakfront
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ds.project.tadaktadakfront.contracts.*
+import kotlinx.android.synthetic.main.recyclerview_item.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,18 +31,18 @@ class NaviContractCollection : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    lateinit var mainActivity: MainActivity
-    private val newcontractActivityRequestCode = 1
-    private val contractViewModel: ContractViewModel by viewModels {
-        ContractViewModelFactory((mainActivity.application as ContractsApplication).repository)
-    }
 
+    private val contractViewModel: ContractViewModel by viewModels {
+        ContractViewModelFactory((activity?.application as ContractsApplication).repository)
+    }
+    private lateinit var getResult: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
+
         }
     }
 
@@ -59,32 +61,25 @@ class NaviContractCollection : Fragment() {
             contracts.let { adapter.submitList(it) }
         }
 
+        getResult=registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+
+            if (it.resultCode == Activity.RESULT_OK) {
+
+                val name: String = it.data?.getStringExtra("name").toString()
+                val number: String = it.data?.getStringExtra("number").toString()
+                val address: String = it.data?.getStringExtra("address").toString()
+
+                val contract = Contract(null, name, number, address)
+                contractViewModel.insert(contract)
+
+            } else {
+                Toast.makeText(activity?.applicationContext, "empty not saved", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         return view
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
-        super.onActivityResult(requestCode, resultCode, intentData)
-
-        if (requestCode == newcontractActivityRequestCode && resultCode == Activity.RESULT_OK) {
-            val name: String = arguments?.getString("name").toString()
-            val number: String = arguments?.getString("number").toString()
-            val address: String = arguments?.getString("address").toString()
-
-            val contract = Contract(null, name, number, address)
-            contractViewModel.insert(contract)
-        } else {
-            Toast.makeText(
-                mainActivity.applicationContext,
-                R.string.empty_not_saved,
-                Toast.LENGTH_LONG
-            ).show()
-        }
-    }
-
-    override fun onAttach(context: Context) { //메인 context 자유롭게 사용
-        super.onAttach(context)
-        mainActivity=context as MainActivity
-    }
 
 
     companion object {

@@ -7,7 +7,8 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "contract")
 data class Contract(
 
-    @PrimaryKey(autoGenerate = true) var id: Long?,
+    @PrimaryKey(autoGenerate = true)
+    var id: Long?,
 
     @ColumnInfo(name = "name")
     var name: String,
