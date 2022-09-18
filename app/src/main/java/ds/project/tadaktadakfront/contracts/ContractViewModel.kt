@@ -4,6 +4,7 @@ package ds.project.tadaktadakfront.contracts
 
 import androidx.lifecycle.*
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class ContractViewModel(private  val repository: ContractRepository) : ViewModel(){
@@ -13,6 +14,7 @@ class ContractViewModel(private  val repository: ContractRepository) : ViewModel
     fun insert(contract: Contract) = viewModelScope.launch {
         repository.insert(contract)
     }
+
 }
 
 class ContractViewModelFactory(private val repository: ContractRepository) : ViewModelProvider.Factory {

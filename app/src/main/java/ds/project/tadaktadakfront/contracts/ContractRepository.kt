@@ -12,4 +12,5 @@ class ContractRepository(private val contractDao: ContractDao) {
     suspend fun insert(contract:Contract){
         contractDao.insert(contract)
     }
+
 }

@@ -10,12 +10,10 @@ import android.os.Handler
 import android.os.Looper
 import android.text.TextUtils
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.Task
 import com.google.mlkit.vision.common.InputImage
@@ -23,6 +21,8 @@ import com.google.mlkit.vision.text.Text
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.TextRecognizer
 import com.google.mlkit.vision.text.korean.KoreanTextRecognizerOptions
+import ds.project.tadaktadakfront.contracts.Contract
+import ds.project.tadaktadakfront.contracts.ContractViewModel
 import java.io.File
 
 
@@ -61,27 +61,6 @@ class SetImageActivity : AppCompatActivity() {
 
         }, 2000)
 
-        var nameEditText=findViewById<EditText>(R.id.add_edittext_name)
-        var numberEditText=findViewById<EditText>(R.id.add_edittext_number)
-        var addressEditText=findViewById<EditText>(R.id.add_edittext_address)
-
-        val saveButton = findViewById<Button>(R.id.button_save)
-        saveButton.setOnClickListener {
-            val replyIntent = Intent()
-            if (TextUtils.isEmpty(numberEditText.text)) {
-                setResult(Activity.RESULT_CANCELED, replyIntent)
-            } else {
-                val name = nameEditText.text.toString()
-                val number = numberEditText.text.toString()
-                val address= addressEditText.text.toString()
-
-                replyIntent.putExtra("name", name)
-                replyIntent.putExtra("number", number)
-                replyIntent.putExtra("address", address)
-                setResult(Activity.RESULT_OK, replyIntent)
-            }
-            finish()
-        }
     }
 
 

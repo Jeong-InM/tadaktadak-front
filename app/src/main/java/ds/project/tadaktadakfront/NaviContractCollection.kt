@@ -15,7 +15,6 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ds.project.tadaktadakfront.contracts.*
-import kotlinx.android.synthetic.main.recyclerview_item.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,10 +31,6 @@ class NaviContractCollection : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-    private val contractViewModel: ContractViewModel by viewModels {
-        ContractViewModelFactory((activity?.application as ContractsApplication).repository)
-    }
-    private lateinit var getResult: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,31 +46,6 @@ class NaviContractCollection : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_navi_contract_collection, container, false)
-
-        val recyclerView : RecyclerView= view.findViewById(R.id.recyclerview)
-        val adapter = ContractListAdapter()
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(activity?.applicationContext)
-
-        contractViewModel.allContracts.observe(viewLifecycleOwner) { contracts ->
-            contracts.let { adapter.submitList(it) }
-        }
-
-        getResult=registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-
-            if (it.resultCode == Activity.RESULT_OK) {
-
-                val name: String = it.data?.getStringExtra("name").toString()
-                val number: String = it.data?.getStringExtra("number").toString()
-                val address: String = it.data?.getStringExtra("address").toString()
-
-                val contract = Contract(null, name, number, address)
-                contractViewModel.insert(contract)
-
-            } else {
-                Toast.makeText(activity?.applicationContext, "empty not saved", Toast.LENGTH_SHORT).show()
-            }
-        }
 
         return view
     }
