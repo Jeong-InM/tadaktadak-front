@@ -8,13 +8,13 @@ import androidx.room.PrimaryKey
 data class Contract(
 
     @PrimaryKey(autoGenerate = true)
-    var id: Long?,
+    var id: Long? = null,
 
     @ColumnInfo(name = "name")
-    var name: String,
+    var name: String ="",
 
     @ColumnInfo(name = "number")
-    var number: String,
+    var number: String="",
 
     @ColumnInfo(name = "address")
-    var address: String)
+    var address: String="")
