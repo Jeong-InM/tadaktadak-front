@@ -17,7 +17,6 @@
         <provider android:authorities="ds.project.tadaktadakfront.fileprovider" />
     </queries>
 
-
     <application
         android:name=".contracts.ContractsApplication"
         android:allowBackup="true"
@@ -28,8 +27,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Tadaktadak_front"
         android:usesCleartextTraffic="true">
-
-
 
         <activity
             android:name=".SplashActivity"
@@ -45,7 +42,7 @@
         <activity
             android:name=".LoginActivity.LoginActivity"
             android:exported="true"
-            android:theme="@style/Theme.Tadaktadak_front"/>
+            android:theme="@style/Theme.Tadaktadak_front" />
         <activity
             android:name=".LoginActivity.SignUpActivity"
             android:exported="true" />
@@ -56,13 +53,11 @@
             android:name=".MainActivity"
             android:exported="true" />
         <activity
-            android:name=".SetImageActivity"
+            android:name=".setImageActivity"
             android:exported="true" />
-
-        <activity android:name=".chatbot.ChatbotActivity"
-            android:exported="true"/>
-
-
+        <activity
+            android:name=".chatbot.ChatbotActivity"
+            android:exported="true" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -73,6 +68,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />
         </provider>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
