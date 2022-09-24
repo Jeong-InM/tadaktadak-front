@@ -128,5 +128,11 @@ dependencies {
     implementation 'com.google.cloud:google-cloud-dialogflow:2.1.0'
     implementation 'io.grpc:grpc-okhttp:1.30.0'
 
+    //text recognition
+    implementation 'com.google.mlkit:text-recognition-korean:16.0.0-beta4'
+
+    //ner
+    implementation 'com.google.code.gson:gson:2.9.1'
+
 
 }
