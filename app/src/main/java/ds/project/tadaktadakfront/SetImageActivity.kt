@@ -21,8 +21,6 @@ import com.google.mlkit.vision.text.Text
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.TextRecognizer
 import com.google.mlkit.vision.text.korean.KoreanTextRecognizerOptions
-import ds.project.tadaktadakfront.contracts.Contract
-import ds.project.tadaktadakfront.contracts.ContractViewModel
 import java.io.File
 
 
@@ -31,6 +29,11 @@ class SetImageActivity : AppCompatActivity() {
 
     private lateinit var textRecognizer: TextRecognizer
     lateinit var textView: TextView
+
+    private lateinit var nameEditText: EditText
+    private lateinit var numberEditText: EditText
+    private lateinit var addressEditText: EditText
+    private lateinit var saveButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,41 +53,32 @@ class SetImageActivity : AppCompatActivity() {
             .placeholder(R.drawable.ic_launcher_foreground)
             .into(imageView)
 
-        textView = findViewById(R.id.image_text)
 
-        // 2초 후 다음 액티비티로 넘김
-        Handler(Looper.getMainLooper()).postDelayed({
-            convertImagetoText(uriSelected)
-            convertImagetoText(uri)
-            Log.v("tag", "successT")
+        nameEditText=findViewById(R.id.add_edittext_name)
+        numberEditText=findViewById(R.id.add_edittext_number)
+        addressEditText=findViewById(R.id.add_edittext_address)
+        saveButton=findViewById(R.id.button_save)
 
+        saveButton.setOnClickListener{
+            val replyIntent = Intent()
+            if (TextUtils.isEmpty(numberEditText.text)) {
+                setResult(Activity.RESULT_CANCELED, replyIntent)
+            } else {
+                val name = nameEditText.text.toString()
+                val number = numberEditText.text.toString()
+                val address = addressEditText.text.toString()
 
-        }, 2000)
+                replyIntent.putExtra("name", name)
+                replyIntent.putExtra("number", number)
+                replyIntent.putExtra("address", address)
+                setResult(Activity.RESULT_OK, replyIntent)
+            }
+            finish()
 
-    }
-
-
-
-    private fun convertImagetoText(imageUri: Uri?) {
-        try {
-
-            var inputImg = InputImage.fromFilePath(applicationContext, imageUri!!)
-            Log.v("tag", "successC")
-            val result: Task<Text> = textRecognizer.process(inputImg)
-                .addOnSuccessListener {
-                    Log.v("tag", "success")
-                    textView.text = it.text
-
-                }.addOnFailureListener {
-                    textView.text = "Error : ${it.message}"
-
-                }
-        } catch (e: Exception) {
+            Toast.makeText(this@SetImageActivity, "계약서 정보를 저장하였습니다.", Toast.LENGTH_SHORT).show()
 
         }
-
-
     }
 
-    }
+}
 
