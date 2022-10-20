@@ -1,6 +1,7 @@
-package ds.project.tadaktadakfront.contract
+package ds.project.tadaktadakfront.contract.model.dao
 
 import androidx.room.*
+import ds.project.tadaktadakfront.contract.model.entity.Contract
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -1,6 +1,8 @@
-package ds.project.tadaktadakfront.contract
+package ds.project.tadaktadakfront.contract.repository
 
 import androidx.annotation.WorkerThread
+import ds.project.tadaktadakfront.contract.model.dao.ContractDAO
+import ds.project.tadaktadakfront.contract.model.entity.Contract
 import kotlinx.coroutines.flow.Flow
 
 class ContractRepository(private val contractDao: ContractDAO) {

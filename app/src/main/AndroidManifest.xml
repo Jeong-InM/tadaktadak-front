@@ -19,7 +19,7 @@
 
 
     <application
-        android:name=".contract.ContractApplication"
+        android:name=".contract.view.callback.ContractApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="내 손안의 근로계약서"
@@ -60,6 +60,8 @@
             android:exported="true" />
 
         <activity android:name=".chatbot.ChatbotActivity"
+            android:exported="true"/>
+        <activity android:name=".NewContractActivity"
             android:exported="true"/>
 
 

@@ -60,6 +60,8 @@ class SetImageActivity : AppCompatActivity() {
         saveButton=findViewById(R.id.button_save)
 
         saveButton.setOnClickListener{
+
+            /*
             val replyIntent = Intent()
             if (TextUtils.isEmpty(numberEditText.text)) {
                 setResult(Activity.RESULT_CANCELED, replyIntent)
@@ -75,8 +77,18 @@ class SetImageActivity : AppCompatActivity() {
             }
             finish()
 
-            Toast.makeText(this@SetImageActivity, "계약서 정보를 저장하였습니다.", Toast.LENGTH_SHORT).show()
+             */
+            if (!TextUtils.isEmpty(numberEditText.text)) {
+                val name = nameEditText.text.toString()
+                val number = numberEditText.text.toString()
+                val address = addressEditText.text.toString()
 
+                startActivity(Intent(this, MainActivity::class.java).apply {
+                    putExtra("name", name)
+                    putExtra("number", number)
+                    putExtra("address", address)
+                })
+            }
         }
     }
 

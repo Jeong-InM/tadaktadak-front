@@ -35,7 +35,7 @@
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/item_tv_initial"
         android:layout_marginStart="16dp"
-        tools:text="Employer"
+        tools:text="Enterprise"
         android:layout_marginTop="15dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/item_tv_number" />
@@ -59,7 +59,7 @@
             app:layout_constraintStart_toStartOf="@+id/item_tv_number"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:text="서울시 도봉구 삼양로 144길 33 덕성여자대학교"/>
+            tools:text="Enter your address."/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

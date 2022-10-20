@@ -1,4 +1,4 @@
-package ds.project.tadaktadakfront.contract
+package ds.project.tadaktadakfront.contract.view.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ds.project.tadaktadakfront.R
+import ds.project.tadaktadakfront.contract.model.entity.Contract
 
 class ContractAdapter : ListAdapter<Contract, ContractAdapter.ContractViewHolder>(ContractComparator()) {
 
@@ -24,7 +25,7 @@ class ContractAdapter : ListAdapter<Contract, ContractAdapter.ContractViewHolder
     }
 
     class ContractViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        private val nameTextView: TextView = itemView.findViewById<TextView>(R.id.item_tv_name)
+        private val nameTextView: TextView = itemView.findViewById(R.id.item_tv_name)
         private val numberTextView: TextView = itemView.findViewById(R.id.item_tv_number)
         private val addressTextView: TextView = itemView.findViewById(R.id.item_tv_address)
 
