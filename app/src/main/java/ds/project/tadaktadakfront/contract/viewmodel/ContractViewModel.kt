@@ -1,11 +1,13 @@
 package ds.project.tadaktadakfront.contract
 
 import androidx.lifecycle.*
+import ds.project.tadaktadakfront.contract.model.entity.Contract
+import ds.project.tadaktadakfront.contract.repository.ContractRepository
 import kotlinx.coroutines.launch
 
 class ContractViewModel(private val repository: ContractRepository): ViewModel() {
 
-    internal val contracts: LiveData<List<Contract>> = repository.allContracts.asLiveData()
+    val contracts: LiveData<List<Contract>> = repository.allContracts.asLiveData()
 
     fun insert(contract: Contract) = viewModelScope.launch {
         repository.insert(contract)

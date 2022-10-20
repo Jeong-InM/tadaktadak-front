@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -37,7 +36,7 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
+            android:inputType="text"
             android:ems="10"
             android:id="@+id/add_edittext_name"
             android:backgroundTint="@color/purple_200"/>
@@ -60,7 +59,7 @@
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
+                android:inputType="text"
                 android:ems="10"
                 android:id="@+id/add_edittext_cpName"
                 android:backgroundTint="@color/purple_200"/>
@@ -128,7 +127,7 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="textAutoCorrect"
+            android:inputType="text"
             android:ems="10"
             android:id="@+id/add_edittext_address"
             android:backgroundTint="@color/purple_200"/>
@@ -164,7 +163,7 @@
             android:orientation="horizontal"
             >
             <TextView
-                android:text="      급여      "
+                android:text="     급여     "
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/add_tv_salary"
@@ -210,7 +209,7 @@
             android:orientation="vertical">
             <TextView
                 android:layout_marginTop="10dp"
-                android:text="   근무요일   "
+                android:text="  근무요일  "
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/add_tv_days"
