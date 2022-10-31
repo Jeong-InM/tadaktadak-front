@@ -1,8 +1,11 @@
 package ds.project.tadaktadakfront;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -14,19 +17,33 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.text.Text;
 import com.google.mlkit.vision.text.TextRecognition;
 import com.google.mlkit.vision.text.TextRecognizer;
 import com.google.mlkit.vision.text.korean.KoreanTextRecognizerOptions;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class setImageActivity extends AppCompatActivity{
@@ -38,6 +55,10 @@ public class setImageActivity extends AppCompatActivity{
         public InputImage inputImage;
         String tempText; // 인식된 결과를 넣을 String
         String[] resultText;// 인식된 결과를 parsing후 분석할 String Array
+
+    public ArrayList<String> item = new ArrayList<String>();
+    public ArrayList<String> typeitem = new ArrayList<String>();
+    public ArrayList<MainList> mainLists = new ArrayList<MainList>();
 
         //나오는 결과 edittext
         public EditText name;
@@ -75,6 +96,19 @@ public class setImageActivity extends AppCompatActivity{
 
         // 일하는 시간
         int wHours;
+
+        Intent intent = new Intent();
+
+    public class MainList{
+        public String mName;
+        public String mCategory;
+        public MainList(String name, String category){
+            this.mName = name;
+            this.mCategory = category;
+        }
+        public String getmName() { return mName; }
+        public String getmCategory() { return mCategory; }
+    }
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -151,19 +185,29 @@ public class setImageActivity extends AppCompatActivity{
                 @Override
                 public void onClick(View view) {
 
+                    Intent result = new Intent();
+
                     //editText에서 수정된 값을 넘겨줌
                     eName = name.getText().toString();
                     //System.out.println("값: "+eName);
+                   result.putExtra("eName", eName);
                     rCpName = cpName.getText().toString();
+                    result.putExtra("rCpName", rCpName);
                     rEnName = enName.getText().toString();
+                    result.putExtra("rEnName", rEnName);
                     rNumber = number.getText().toString();
+                    result.putExtra("rNumber", rNumber);
                     rAddress = address.getText().toString();
+                    result.putExtra("rAddress", rAddress);
                     rStart = start.getText().toString();
+                    result.putExtra("rStart", rStart);
                     rSalary = salary.getText().toString();
+                    result.putExtra("rSalary", rSalary);
                     rHours = hours.getText().toString();
+                    result.putExtra("rHours", rHours);
                 }
             });
-            
+
 
 
         } // end onCreate
@@ -186,8 +230,8 @@ public class setImageActivity extends AppCompatActivity{
 
                                         splitResult(tempText);
 
-//                                        usingNLPAPI Async2 = new usingNLPAPI();
-//                                        Async2.execute();
+                                        usingNLPAPI Async2 = new usingNLPAPI();
+                                        Async2.execute();
 
                                     }
                                 })
@@ -208,34 +252,189 @@ public class setImageActivity extends AppCompatActivity{
         public void splitResult(String string){
             resultText = string.split("\n");
             for (int i = 0; i< resultText.length; i++) {
-                if(resultText[i].contains("CS")){
-                    eName = resultText[i];
-                    System.out.println("값"+eName);
-                    name.setText(resultText[i]);
-                }else if(resultText[i].contains("김덕성")){
-                    rCpName = resultText[i];
-                    cpName.setText(resultText[i]);
-                }else if(resultText[i].contains("민혜")){
-                    rEnName = resultText[i];
-                    enName.setText(resultText[i]);
-                }else if(resultText[i].contains("연락처")){
-                    rNumber = resultText[i];
-                    number.setText(resultText[i]);
-                }else if(resultText[i].contains("서울")){
-                    rAddress = resultText[i];
-                    address.setText(resultText[i]);
-                }else if(resultText[i].contains("계약기간")){
-                    rStart = resultText[i];
-                    start.setText(resultText[i]);
-                }else if(resultText[i].contains("임 금")){
-                    rSalary = resultText[i];
-                    salary.setText(resultText[i]);
-                    hours.setText("8"); //일하는 시간
-                }
+//                if(resultText[i].contains("CS")){
+//                    eName = resultText[i];
+//                    System.out.println("값"+eName);
+//                    name.setText(resultText[i]);
+//                }else if(resultText[i].contains("김덕성")){
+//                    rCpName = resultText[i];
+//                    cpName.setText(resultText[i]);
+//                }else if(resultText[i].contains("민혜")){
+//                    rEnName = resultText[i];
+//                    enName.setText(resultText[i]);
+//                }else if(resultText[i].contains("연락처")){
+//                    rNumber = resultText[i];
+//                    number.setText(resultText[i]);
+//                }else if(resultText[i].contains("서울")){
+//                    rAddress = resultText[i];
+//                    address.setText(resultText[i]);
+//                }else if(resultText[i].contains("계약기간")){
+//                    rStart = resultText[i];
+//                    start.setText(resultText[i]);
+//                }else if(resultText[i].contains("임 금")){
+//                    rSalary = resultText[i];
+//                    salary.setText(resultText[i]);
+//                    hours.setText("8"); //일하는 시간
+//                }
 
                 System.out.println("나눠진 값"+resultText[i]);
             }
 
         } // end splitResult
+
+    public class usingNLPAPI extends AsyncTask<String, Void, String> {
+
+        @RequiresApi(api = Build.VERSION_CODES.N)
+        @Override
+
+        protected String doInBackground(String... strings) {
+
+            for (int i = 0; i < resultText.length; i++) {
+
+                String openApiURL = "http://aiopen.etri.re.kr:8000/WiseNLU";
+                String accessKey = "b5307d84-0969-4a2c-a53f-f46af682f6d9";
+                String analysisCode = "ner";
+                // 인식된 텍스트 저장
+                String text = resultText[i];
+                Gson gson = new Gson();
+
+                Map<String, Object> request = new HashMap<>();
+                Map<String, String> argument = new HashMap<>();
+
+                argument.put("analysis_code", analysisCode);
+                argument.put("text", text);
+
+                request.put("access_key", accessKey);
+                request.put("argument", argument);
+
+                URL url;
+                Integer responseCode = null;
+                String responBodyJson = null;
+                Map<String, Object> responeBody = null;
+
+                try {
+                    url = new URL(openApiURL);
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    con.setRequestMethod("POST");
+                    con.setDoOutput(true);
+
+                    DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+                    wr.write(gson.toJson(request).getBytes("UTF-8"));
+                    wr.flush();
+                    wr.close();
+
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
+
+                    String line;
+                    String page = "";
+
+                    while ((line = reader.readLine()) != null) {
+                        page += line;
+                    }
+
+                    JsonParser jsonParser = new JsonParser();
+                    JsonElement jsonElement = jsonParser.parse(page);
+
+
+                    String check = jsonElement.getAsJsonObject().get("return_object").getAsJsonObject().get("sentence").getAsJsonArray().get(0).getAsJsonObject().get("NE").getAsJsonArray().toString();
+                    System.out.println("에러검사: "+check);
+                    if(!check.equals("[]"))
+                    {
+                        String type = jsonElement.getAsJsonObject().get("return_object").getAsJsonObject().get("sentence").getAsJsonArray().get(0).getAsJsonObject().get("NE").getAsJsonArray().get(0).getAsJsonObject().get("type").toString();
+
+                        if(type.equals("\"LCP_CAPITALCITY\"") || type.equals("\"LCP_PROVINCE\"") && type.equals("\"LCP_COUNTY\"") && type.equals("\"LCP_CITY\""))
+
+                        {
+
+                            rAddress = text;
+                            System.out.println("주소찾음: "+ rAddress); //주소 제대로 나오는지 테스트
+
+                        }
+                        else if (type.equals("\"PS_NAME\"") && text.equals("대표자")){ // 이름 찾아서 넘겨주기
+                            String rcpName = jsonElement.getAsJsonObject().get("return_object").getAsJsonObject().get("sentence").getAsJsonArray().get(0).getAsJsonObject().get("NE").getAsJsonArray().get(0).getAsJsonObject().get("text").toString();
+
+                            System.out.println("이름임:"+text);
+                            rCpName = rcpName;
+
+                        }
+                        else if (type.equals("\"PS_NAME\"") && text.equals("근로자")){
+                            String worker = jsonElement.getAsJsonObject().get("return_object").getAsJsonObject().get("sentence").getAsJsonArray().get(0).getAsJsonObject().get("NE").getAsJsonArray().get(0).getAsJsonObject().get("text").toString();
+                            rEnName = worker;
+                            System.out.println(worker);
+
+                        }
+                        else if (type.equals("\"DT_MONTH\"") || type.equals("\"DT_YEAR\"") && text.equals("기간")){
+                            rStart = text;
+                        }
+                        else if(type.equals("\"OG\"") || text.equals("(주)")){
+                            rCpName = text;
+                        }
+
+                    }
+
+
+                   /* responseCode = con.getResponseCode();
+                    InputStream is = con.getInputStream();
+                    BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                    StringBuffer sb = new StringBuffer();
+
+                    String inputLine = "";
+                    while ((inputLine = br.readLine()) != null) {
+                        sb.append(inputLine);
+                    }
+                    responBodyJson = sb.toString();
+
+                    // http 요청 오류 시 처리
+                    if (responseCode != 200) {
+                        // 오류 내용 출력
+                        System.out.println("[error] " + responBodyJson);
+                    }
+
+                    responeBody = gson.fromJson(responBodyJson, Map.class);
+                    Integer result = ((Double) responeBody.get("result")).intValue();
+                    Map<String, Object> returnObject;
+                    List<Map> sentences;
+
+                    // 분석 요청 오류 시 처리
+                    if (result != 0) {
+
+                        // 오류 내용 출력
+                        System.out.println("[error] " + responeBody.get("result"));
+                    }
+
+                    returnObject = (Map<String, Object>) responeBody.get("return_object");
+                    sentences = (List<Map>) returnObject.get("sentence");
+                    Map<String, NameEntity> nameEntitiesMap = new HashMap<String, NameEntity>();
+                    List<NameEntity> nameEntities = null;
+
+                    for (Map<String, Object> sentence : sentences) {
+
+                        List<Map<String, Object>> nameEntityRecognitionResult = (List<Map<String, Object>>) sentence.get("NE");
+                        for (Map<String, Object> nameEntityInfo : nameEntityRecognitionResult) {
+                            String name = (String) nameEntityInfo.get("text");
+                            NameEntity nameEntity = nameEntitiesMap.get(name);
+                            System.out.println("개체명 인식 결과" + nameEntityRecognitionResult);
+                            if (nameEntity == null) {
+                                nameEntity = new NameEntity(name, (String) nameEntityInfo.get("type"), 1);
+                                nameEntitiesMap.put(name, nameEntity);
+
+                            } else {
+                                nameEntity.count = nameEntity.count + 1;
+                            }
+                        }
+                        System.out.println("");
+
+                    }*/
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return null;
+        }
+
+    } // end using NLPAPI
 
     }

@@ -27,7 +27,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Tadaktadak_front"
         android:usesCleartextTraffic="true">
-
+        <activity
+            android:name=".setResultActivity"
+            android:exported="false" />
         <activity
             android:name=".SplashActivity"
             android:exported="true"
