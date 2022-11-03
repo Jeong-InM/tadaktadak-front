@@ -17,4 +17,5 @@ interface ContractDAO {
 
     @Query("SELECT * FROM contract ORDER BY name ASC")
     fun getAll(): Flow<List<Contract>>
+
 }

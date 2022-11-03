@@ -61,23 +61,6 @@ class SetImageActivity : AppCompatActivity() {
 
         saveButton.setOnClickListener{
 
-            /*
-            val replyIntent = Intent()
-            if (TextUtils.isEmpty(numberEditText.text)) {
-                setResult(Activity.RESULT_CANCELED, replyIntent)
-            } else {
-                val name = nameEditText.text.toString()
-                val number = numberEditText.text.toString()
-                val address = addressEditText.text.toString()
-
-                replyIntent.putExtra("name", name)
-                replyIntent.putExtra("number", number)
-                replyIntent.putExtra("address", address)
-                setResult(Activity.RESULT_OK, replyIntent)
-            }
-            finish()
-
-             */
             if (!TextUtils.isEmpty(numberEditText.text)) {
                 val name = nameEditText.text.toString()
                 val number = numberEditText.text.toString()

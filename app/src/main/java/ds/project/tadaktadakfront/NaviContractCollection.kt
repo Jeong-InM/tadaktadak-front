@@ -1,17 +1,25 @@
 package ds.project.tadaktadakfront
 
+import android.Manifest
 import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
+import androidx.browser.customtabs.CustomTabsClient.getPackageName
+import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -43,7 +51,6 @@ class NaviContractCollection : Fragment() {
     private var param2: String? = null
 
     lateinit var mainActivity: MainActivity
-    private val newcontactActivityRequestCode = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,6 +78,7 @@ class NaviContractCollection : Fragment() {
 
         adapter.submitList(arrayListOf(Contract(null, name, number, address)))
 
+
         view.add_button.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?){
                 val add = getView()?.findViewById<FloatingActionButton>(R.id.add_button)
@@ -87,6 +95,8 @@ class NaviContractCollection : Fragment() {
         super.onAttach(context)
         mainActivity=context as MainActivity
     }
+
+
 
 
 
