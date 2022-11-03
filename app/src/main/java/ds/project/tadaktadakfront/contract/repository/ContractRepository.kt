@@ -1,11 +1,13 @@
 package ds.project.tadaktadakfront.contract.repository
 
 import androidx.annotation.WorkerThread
+import androidx.lifecycle.LiveData
+import ds.project.tadaktadakfront.contract.model.ContractDatabase
 import ds.project.tadaktadakfront.contract.model.dao.ContractDAO
 import ds.project.tadaktadakfront.contract.model.entity.Contract
 import kotlinx.coroutines.flow.Flow
 
-class ContractRepository(private val contractDao: ContractDAO) {
+class ContractRepository(private var contractDao: ContractDAO) {
 
     val allContracts: Flow<List<Contract>> = contractDao.getAll()
     // 기본적으로 Room은 main thread에서 suspend 쿼리를 실행함
@@ -21,4 +23,5 @@ class ContractRepository(private val contractDao: ContractDAO) {
     suspend fun delete(contract: Contract){
         contractDao.delete(contract)
     }
+
 }

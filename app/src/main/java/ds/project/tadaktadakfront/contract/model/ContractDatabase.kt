@@ -43,5 +43,6 @@ abstract class ContractDatabase: RoomDatabase() {
                 instance
             }
         }
+
     }
 }

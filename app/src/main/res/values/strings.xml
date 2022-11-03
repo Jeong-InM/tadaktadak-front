@@ -20,12 +20,15 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
-
-
+    <string name="ask_permission_title">권한이 필요합니다!</string>
+    <string name="ask_permission_storage">파일 권한이 필요합니다!\n근로내역의 리스트가 담긴 파일을 저장하는 데 이용됩니다.</string>
     <string name="hint_word">Word...</string>
     <string name="button_save">Save</string>
     <string name="empty_not_saved">Word not saved because it is empty.</string>
     <string name="add_word">Add word</string>
+
+    <string name="export_file_success">방문자 기록 파일을 생성하였습니다.\n내 파일/Documents/ContractList 폴더를 확인해주세요!</string>
+    <string name="export_file_fail">방문자 기록 파일 생성에 실패하였습니다.</string>
 
 
 
