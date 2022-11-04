@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -163,7 +164,7 @@ public class setImageActivity extends AppCompatActivity{
 
             Log.v("tag", "successI");
 
-            ImageView imageView = (ImageView)findViewById(R.id.set_iv);
+            ImageView imageView = (ImageView) findViewById(R.id.set_iv);
             Glide.with(this)
                     .load(currentPhotoPath)
                     .error(new ColorDrawable(Color.RED))
@@ -250,8 +251,55 @@ public class setImageActivity extends AppCompatActivity{
         }// end convertImagetoText
 
         public void splitResult(String string){
+
+
+
+
             resultText = string.split("\n");
+
+
+
+
             for (int i = 0; i< resultText.length; i++) {
+                // 정규직==표준근로-황민혜
+                if(resultText[i].contains("표준")||resultText[i].contains("정함이")){
+                    // '황'포함 시
+                    if(resultText[i].startsWith("황")){
+                        eName=resultText[i].substring(0,2);
+                        name.setText(eName);
+                        System.out.println(eName);
+                    }
+
+
+
+                }
+
+                // 계약직-유희윤
+                else if (resultText[i].contains("")) {
+                    eName = resultText[i];
+                    name.setText(resultText[i]);
+
+                }
+                // 청소년-이유나
+                else if (resultText[i].contains("가족관계")||resultText[i].contains("연소")) {
+
+                }
+
+                /*
+                // 외국인
+                else if (resultText[i].contains("labor")) {
+
+                }
+                */
+
+                // 건설 일용직-문정인
+                else if (resultText[i].contains("건설")) {
+                    eName= resultText[i];
+
+                }
+
+
+
 //                if(resultText[i].contains("CS")){
 //                    eName = resultText[i];
 //                    System.out.println("값"+eName);
