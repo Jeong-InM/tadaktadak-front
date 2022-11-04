@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +14,8 @@ import ds.project.tadaktadakfront.chatbot.ChatbotActivity;
 public class setResultActivity extends AppCompatActivity {
 
     Button askChatbot;
+    TextView employerName;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,13 @@ public class setResultActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // set Image에서 넘어온 회사명 적용하기
+        employerName = findViewById(R.id.employer_name);
+        Intent result = getIntent();
+        String resultName = result.getStringExtra("rEnName");
+        employerName.setText(resultName);
+
 
 
 

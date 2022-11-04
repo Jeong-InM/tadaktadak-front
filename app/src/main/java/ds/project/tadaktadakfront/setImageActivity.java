@@ -185,8 +185,7 @@ public class setImageActivity extends AppCompatActivity{
                 @Override
                 public void onClick(View view) {
 
-                    Intent result = new Intent();
-
+                    Intent result = new Intent(getApplicationContext(), setResultActivity.class);
                     //editText에서 수정된 값을 넘겨줌
                     eName = name.getText().toString();
                     //System.out.println("값: "+eName);
@@ -345,10 +344,8 @@ public class setImageActivity extends AppCompatActivity{
                         if(type.equals("\"LCP_CAPITALCITY\"") || type.equals("\"LCP_PROVINCE\"") && type.equals("\"LCP_COUNTY\"") && type.equals("\"LCP_CITY\""))
 
                         {
-
                             rAddress = text;
                             System.out.println("주소찾음: "+ rAddress); //주소 제대로 나오는지 테스트
-
                         }
                         else if (type.equals("\"PS_NAME\"") && text.equals("대표자")){ // 이름 찾아서 넘겨주기
                             String rcpName = jsonElement.getAsJsonObject().get("return_object").getAsJsonObject().get("sentence").getAsJsonArray().get(0).getAsJsonObject().get("NE").getAsJsonArray().get(0).getAsJsonObject().get("text").toString();
