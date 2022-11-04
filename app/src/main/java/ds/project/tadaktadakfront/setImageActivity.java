@@ -164,12 +164,12 @@ public class setImageActivity extends AppCompatActivity{
 
             Log.v("tag", "successI");
 
-            ImageView imageView = (ImageView) findViewById(R.id.set_iv);
-            Glide.with(this)
-                    .load(currentPhotoPath)
-                    .error(new ColorDrawable(Color.RED))
-                    .placeholder(R.drawable.ic_launcher_foreground)
-                    .into(imageView);
+//            ImageView imageView = (ImageView) findViewById(R.id.set_iv);
+//            Glide.with(this)
+//                    .load(currentPhotoPath)
+//                    .error(new ColorDrawable(Color.RED))
+//                    .placeholder(R.drawable.ic_launcher_foreground)
+//                    .into(imageView);
 
             // 2초후 다음 액티비티로 넘김
             new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
