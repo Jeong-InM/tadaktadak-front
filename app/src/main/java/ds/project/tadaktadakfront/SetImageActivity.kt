@@ -46,12 +46,12 @@ class SetImageActivity : AppCompatActivity() {
         val uri: Uri = File(currentPhotoPath).toUri()
         Log.v("tag", "successI")
 
-        val imageView: ImageView = findViewById(R.id.set_iv)
+       /* val imageView: ImageView = findViewById(R.id.set_iv)
         Glide.with(this@SetImageActivity)
             .load(currentPhotoPath)
             .error(ColorDrawable(Color.RED))
             .placeholder(R.drawable.ic_launcher_foreground)
-            .into(imageView)
+            .into(imageView)*/
 
 
         nameEditText=findViewById(R.id.add_edittext_name)
