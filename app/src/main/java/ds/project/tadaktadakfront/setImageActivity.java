@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -60,6 +61,7 @@ public class setImageActivity extends AppCompatActivity{
     public ArrayList<String> item = new ArrayList<String>();
     public ArrayList<String> typeitem = new ArrayList<String>();
     public ArrayList<MainList> mainLists = new ArrayList<MainList>();
+
 
         //나오는 결과 edittext
         public EditText name;
@@ -205,8 +207,19 @@ public class setImageActivity extends AppCompatActivity{
                     result.putExtra("rSalary", rSalary);
                     rHours = hours.getText().toString();
                     result.putExtra("rHours", rHours);
+
+
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.putExtra("name", eName);
+                    intent.putExtra("number", rNumber);
+                    intent.putExtra("address", rAddress);
+                    startActivity(intent);
                 }
+
+
+
             });
+
 
 
 
@@ -250,15 +263,7 @@ public class setImageActivity extends AppCompatActivity{
         }// end convertImagetoText
 
         public void splitResult(String string){
-
-
-
-
             resultText = string.split("\n");
-
-
-
-
             for (int i = 0; i< resultText.length; i++) {
                 // 정규직==표준근로-황민혜
                 if(resultText[i].contains("표준")||resultText[i].contains("정함이")){
@@ -269,28 +274,23 @@ public class setImageActivity extends AppCompatActivity{
                         System.out.println(eName);
                     }
 
-
-
                 }
 
                 // 계약직-유희윤
                 else if (resultText[i].contains("")) {
                     eName = resultText[i];
                     name.setText(resultText[i]);
-
                 }
                 // 청소년-이유나
                 else if (resultText[i].contains("가족관계")||resultText[i].contains("연소")) {
 
                 }
-
                 /*
                 // 외국인
                 else if (resultText[i].contains("labor")) {
 
                 }
                 */
-
                 // 건설 일용직-문정인
                 else if (resultText[i].contains("건설")) {
                     eName= resultText[i];
