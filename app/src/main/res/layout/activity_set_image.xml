@@ -4,15 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".SetImageActivity">
-
-    <ImageView
-        android:id="@+id/set_iv"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2" />
+    tools:context=".setImageActivity">
 
     <LinearLayout
+        android:paddingTop="112dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -272,8 +267,6 @@
         </LinearLayout>
     </LinearLayout>
 
-
-
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_save"
         android:layout_width="match_parent"
@@ -281,5 +274,5 @@
         android:background="@drawable/button_resource"
         android:text="@string/button_save"
         android:layout_margin="@dimen/big_padding"
-        android:textColor="@color/buttonLabel" />
+        android:textColor="@color/buttonLabel"/>
 </LinearLayout>

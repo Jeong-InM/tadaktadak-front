@@ -98,7 +98,7 @@ class NaviHome : Fragment() {
                         ) {
                             funImageUpload(requireView()) //파이어베이스 저장 함수
                         }
-                        val intent = Intent(activity, SetImageActivity::class.java)
+                        val intent = Intent(activity, setImageActivity::class.java)
                         intent.putExtra("path", currentPhotoPath)
                         activity!!.startActivity(intent)
                     }
