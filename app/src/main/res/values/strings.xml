@@ -27,25 +27,7 @@
     <string name="empty_not_saved">Word not saved because it is empty.</string>
     <string name="add_word">Add word</string>
 
-    <string-array name="okornot">
-        <item>alert</item>
-        <item>check</item>
-    </string-array>
+    <string name="underage">가족관계 증명서,\n취직인허증이 꼭 필요합니다.</string>
 
-    <string-array name="evaluation">
-        <item>연장근로</item>
-        <item>근로시간 초과</item>
-        <item>정규직</item>
-        <item>비정규직</item>
-        <item>프리랜서</item>
-    </string-array>
-
-    <string-array name="description">
-        <item>연장근로입니다.</item>
-        <item>근로시간 초과입니다.</item>
-        <item>정규직으로 보입니다.</item>
-        <item>비정규직으로 보입니다.</item>
-        <item>프리랜서로 보입니다.</item>
-    </string-array>
 
 </resources>
