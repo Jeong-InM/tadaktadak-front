@@ -22,25 +22,23 @@
         <TextView
             android:id="@+id/analysis_result"
             android:layout_width="wrap_content"
-            android:layout_height="61dp"
-            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/noto_sans_medium"
             android:text="계약서 종류"
-            android:textColor="@color/black"
+            android:textColor="@color/indigo"
             android:textSize="32sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.159"
+            app:layout_constraintHorizontal_bias="0.155"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/company_name"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintVertical_bias="0.033"
             tools:ignore="MissingConstraints" />
 
         <TextView
             android:id="@+id/reason"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
             android:fontFamily="@font/noto_sans_regualr"
             android:text="계약서 판별된 이유 작성"
             android:textColor="@color/black"
@@ -60,7 +58,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/noto_sans_regualr"
             android:text="자세히 알고싶다면? 챗봇에게 질문하기"
-            android:textColor="#000000"
+            android:textColor="@color/dark_gray"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -70,9 +68,10 @@
 
 
         <ImageView
+            android:layout_margin="20dp"
             android:id="@+id/imageView2"
-            android:layout_width="128dp"
-            android:layout_height="128dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@mipmap/ic_rule"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -82,18 +81,17 @@
             android:id="@+id/company_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
             android:fontFamily="@font/noto_sans_bold"
             android:paddingTop="40dp"
 
             android:text="회사이름"
             android:textColor="@color/black"
             android:textSize="32sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2"
-            app:layout_constraintVertical_bias="0.571" />
+            app:layout_constraintTop_toTopOf="@+id/imageView2"
+            app:layout_constraintVertical_bias="0.047" />
 
         <View
             android:id="@+id/line"
@@ -102,23 +100,26 @@
             android:background="@android:color/darker_gray"
             app:layout_constraintBottom_toTopOf="@+id/analysis_result"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.506"
+            app:layout_constraintHorizontal_bias="0.493"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/company_name"
-            app:layout_constraintVertical_bias="0.225"
+            app:layout_constraintVertical_bias="0.18"
             tools:ignore="MissingConstraints" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/askChatbot"
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/btn_chatbot"
+            android:background="@drawable/button_resource"
             android:paddingBottom="8dp"
             android:text="챗봇에게 물어보기"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/textView2"
+            app:layout_constraintHorizontal_bias="0.482"
             app:layout_constraintStart_toStartOf="@+id/textView2"
             app:layout_constraintTop_toBottomOf="@+id/textView2"
+            app:layout_constraintVertical_bias="0.171"
             tools:ignore="MissingConstraints" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
