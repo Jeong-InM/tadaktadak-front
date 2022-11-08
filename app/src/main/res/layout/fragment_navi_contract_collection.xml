@@ -25,7 +25,7 @@
         android:layout_marginBottom="50dp"
         android:background="#57AEFF"
         android:paddingHorizontal="16dp"
-        android:text="근로 내역 추출하기"
+        android:text="근로내역 추출하기"
         android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
