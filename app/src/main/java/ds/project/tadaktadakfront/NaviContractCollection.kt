@@ -32,6 +32,10 @@ import ds.project.tadaktadakfront.contract.model.entity.Contract
 import ds.project.tadaktadakfront.contract.view.adapter.ContractAdapter
 import kotlinx.android.synthetic.main.fragment_navi_contract_collection.*
 import kotlinx.android.synthetic.main.fragment_navi_contract_collection.view.*
+import org.apache.poi.hssf.usermodel.HSSFCell
+import org.apache.poi.hssf.usermodel.HSSFRow
+import org.apache.poi.hssf.usermodel.HSSFWorkbook
+import java.io.FileOutputStream
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,8 +53,8 @@ class NaviContractCollection : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-   /* private val workBook = HSSFWorkbook()
-    private val WRITE_XLS_REQ_CODE = 1000*/
+    private val workBook = HSSFWorkbook()
+    private val WRITE_XLS_REQ_CODE = 1000
 
     var name = ""
     var number = ""
@@ -86,9 +90,9 @@ class NaviContractCollection : Fragment() {
 
         adapter.submitList(arrayListOf(Contract(null, name, number, address)))
 
-        /*btnAllList.setOnClickListener {
+        btnAllList.setOnClickListener {
             saveExcel()
-        }*/
+        }
 
         view.add_button.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
@@ -102,7 +106,6 @@ class NaviContractCollection : Fragment() {
         return view
     }
 
-/*
     private fun saveExcel() {
         val sheet = workBook.createSheet() // 새로운 시트 생성
         var row: HSSFRow
@@ -164,7 +167,7 @@ class NaviContractCollection : Fragment() {
         } else {
             Toast.makeText(requireContext(), "근로내역 파일 생성에 실패하였습니다.", Toast.LENGTH_SHORT).show()
         }
-    }*/
+    }
 
 
     override fun onAttach(context: Context) { //메인 context 자유롭게 사용
