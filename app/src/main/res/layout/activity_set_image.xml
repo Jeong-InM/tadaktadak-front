@@ -268,6 +268,14 @@
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_check"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_resource"
+        android:text="@string/button_check"
+        android:layout_margin="@dimen/big_padding"
+        android:textColor="@color/buttonLabel"/>
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

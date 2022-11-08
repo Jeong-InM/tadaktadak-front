@@ -93,6 +93,7 @@ public class setImageActivity extends AppCompatActivity{
 
         // 저장후 다음 액티비티로 넘어가게 해주는 버튼
         Button buttonSave;
+        Button buttoncheck;
 
         // 근로요일을 저장할 변수
         int wDays;
@@ -179,26 +180,29 @@ public class setImageActivity extends AppCompatActivity{
             },1000L);
 
             buttonSave = (Button)findViewById(R.id.button_save);
-            buttonSave.setOnClickListener(new View.OnClickListener() {
+            buttoncheck = (Button)findViewById(R.id.button_check);
+            buttoncheck.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent  = new Intent(getApplicationContext(), setResultActivity.class);
                     intent.putExtra("resultEname",name.getText().toString());
                     System.out.println("type "+contracttype);
                     //intent.putExtra("resultType", type);
-                    intent.putExtra("resultType", contracttype)
-
-                    Intent result = new Intent(getApplicationContext(), MainActivity.class);
-                    result.putExtra("name", eName);
-                    result.putExtra("number", rNumber);
-                    result.putExtra("address", rAddress);
-                    
+                    intent.putExtra("resultType", contracttype);
                      startActivity(intent);
-             
                 }
+            });
 
+            buttonSave.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("name", name.getText().toString());
+                intent.putExtra("number", number.getText().toString());
+                intent.putExtra("address", address.getText().toString() );
 
-
+                startActivity(intent);
+                }
             });
 
 
@@ -255,8 +259,7 @@ public class setImageActivity extends AppCompatActivity{
                 if(resultText[i].contains("황민혜")){
 
                     // '황'포함 시
-                    if(resultText[i].
-                    sWith("황")){
+                    if(resultText[i].startsWith("황")){
                         eName=resultText[i].substring(0,2);
                         name.setText(eName);
                         System.out.println(eName);
