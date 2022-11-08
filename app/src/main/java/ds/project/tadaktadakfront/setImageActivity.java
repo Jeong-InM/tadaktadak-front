@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -60,6 +61,7 @@ public class setImageActivity extends AppCompatActivity{
     public ArrayList<String> item = new ArrayList<String>();
     public ArrayList<String> typeitem = new ArrayList<String>();
     public ArrayList<MainList> mainLists = new ArrayList<MainList>();
+
 
         //나오는 결과 edittext
         public EditText name;
@@ -181,13 +183,22 @@ public class setImageActivity extends AppCompatActivity{
                 @Override
                 public void onClick(View view) {
                     Intent intent  = new Intent(getApplicationContext(), setResultActivity.class);
-
                     intent.putExtra("resultEname",name.getText().toString());
                     System.out.println("type "+contracttype);
                     //intent.putExtra("resultType", type);
-                    intent.putExtra("resultType", contracttype);
-                    startActivity(intent);
+                    intent.putExtra("resultType", contracttype)
+
+                    Intent result = new Intent(getApplicationContext(), MainActivity.class);
+                    result.putExtra("name", eName);
+                    result.putExtra("number", rNumber);
+                    result.putExtra("address", rAddress);
+                    
+                     startActivity(intent);
+             
                 }
+
+
+
             });
 
 
@@ -237,14 +248,15 @@ public class setImageActivity extends AppCompatActivity{
 
         public void splitResult(String string){
 
-                resultText = string.split("\n");
+             resultText = string.split("\n");
 
                 for (int i = 0; i< resultText.length; i++) {
                 // 정규직==표준근로-황민혜
                 if(resultText[i].contains("황민혜")){
 
                     // '황'포함 시
-                    if(resultText[i].startsWith("황")){
+                    if(resultText[i].
+                    sWith("황")){
                         eName=resultText[i].substring(0,2);
                         name.setText(eName);
                         System.out.println(eName);
@@ -253,14 +265,12 @@ public class setImageActivity extends AppCompatActivity{
                     }
 
 
-
                 }
 
                 // 계약직-유희윤
                 else if (resultText[i].contains("")) {
                     eName = resultText[i];
                     name.setText(resultText[i]);
-
                 }
                 // 청소년-이유나
                 // 고용노동부 장관, 취직인허증
@@ -270,14 +280,12 @@ public class setImageActivity extends AppCompatActivity{
 
 
                 }
-
                 /*
                 // 외국인
                 else if (resultText[i].contains("labor")) {
 
                 }
                 */
-
                 // 건설 일용직-문정인
                 else if (resultText[i].contains("건설")) {
                     eName= resultText[i];

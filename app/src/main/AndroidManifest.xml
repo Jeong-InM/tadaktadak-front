@@ -18,7 +18,7 @@
     </queries>
 
     <application
-        android:name=".contracts.ContractsApplication"
+        android:name=".contract.view.callback.ContractApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="내 손안의 근로계약서"
@@ -60,6 +60,10 @@
         <activity
             android:name=".chatbot.ChatbotActivity"
             android:exported="true" />
+
+        <activity android:name=".NewContractActivity"
+            android:exported="true"/>
+
 
         <provider
             android:name="androidx.core.content.FileProvider"
