@@ -27,15 +27,11 @@
     <string name="empty_not_saved">Word not saved because it is empty.</string>
     <string name="add_word">Add word</string>
 
-
+    <string name="underage">가족관계 증명서,\n취직인허증이 꼭 필요합니다.</string>
     <string-array name="okornot">
         <item>alert</item>
         <item>check</item>
     </string-array>
-
-    <string name="export_file_success">방문자 기록 파일을 생성하였습니다.\n내 파일/Documents/ContractList 폴더를 확인해주세요!</string>
-    <string name="export_file_fail">방문자 기록 파일 생성에 실패하였습니다.</string>
-
 
     <string-array name="evaluation">
         <item>연장근로</item>
