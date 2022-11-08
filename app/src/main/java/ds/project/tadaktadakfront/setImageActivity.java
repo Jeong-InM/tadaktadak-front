@@ -1,6 +1,8 @@
 package ds.project.tadaktadakfront;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -12,11 +14,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -42,123 +47,122 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class setImageActivity extends AppCompatActivity {
+public class setImageActivity extends AppCompatActivity{
 
-    TextRecognizer recognizer =
-            TextRecognition.getClient(new KoreanTextRecognizerOptions.Builder().build());
+        TextRecognizer recognizer =
+                TextRecognition.getClient(new KoreanTextRecognizerOptions.Builder().build());
 
-    Handler handler = new Handler();
-    public InputImage inputImage;
-    String tempText; // 인식된 결과를 넣을 String
-    String[] resultText;// 인식된 결과를 parsing후 분석할 String Array
+        Handler handler = new Handler();
+        public InputImage inputImage;
+        String tempText; // 인식된 결과를 넣을 String
+        String[] resultText;// 인식된 결과를 parsing후 분석할 String Array
 
     public ArrayList<String> item = new ArrayList<String>();
     public ArrayList<String> typeitem = new ArrayList<String>();
     public ArrayList<MainList> mainLists = new ArrayList<MainList>();
 
-    //나오는 결과 edittext
-    public EditText name;
-    public EditText cpName; // 사업자 명
-    public EditText enName;  // 근로자 이름
-    public EditText number; // 전화번호
-    public EditText address; // 사업자 주소
-    public EditText start; // 근무 시작일
-    public EditText salary; // 돈
-    public EditText hours; // 근무시간
+        //나오는 결과 edittext
+        public EditText name;
+        public EditText cpName; // 사업자 명
+        public EditText enName;  // 근로자 이름
+        public EditText number; // 전화번호
+        public EditText address; // 사업자 주소
+        public EditText start; // 근무 시작일
+        public EditText salary; // 돈
+        public EditText hours; // 근무시간
 
-    String eName; // editText에 들어갈 상호명
-    String rCpName; // editText에 들어갈 사업자
-    String rEnName; // editText에 들어갈 근로자 주소
-    String rNumber; // editText에 들어갈 사업자 번호
-    String rAddress; // editText에 들어갈 사업자 주소
-    String rStart; // editText에 들어갈 근무 시작일
-    String rSalary; // editText에 들어갈 돈
-    String rHours; // editText에 들어갈 근무시간
+        String eName; // editText에 들어갈 상호명
+        String rCpName; // editText에 들어갈 사업자
+        String rEnName; // editText에 들어갈 근로자 주소
+        String rNumber ; // editText에 들어갈 사업자 번호
+        String rAddress; // editText에 들어갈 사업자 주소
+        String rStart; // editText에 들어갈 근무 시작일
+        String rSalary; // editText에 들어갈 돈
+        String rHours; // editText에 들어갈 근무시간
 
-    // 근로시간용 체크박스
-    CheckBox monCheckbox;
-    CheckBox tueCheckbox;
-    CheckBox wedCheckbox;
-    CheckBox thuCheckbox;
-    CheckBox friCheckbox;
-    CheckBox satCheckbox;
-    CheckBox sunCheckbox;
+        // 근로시간용 체크박스
+        CheckBox monCheckbox;
+        CheckBox tueCheckbox;
+        CheckBox wedCheckbox;
+        CheckBox thuCheckbox;
+        CheckBox friCheckbox;
+        CheckBox satCheckbox;
+        CheckBox sunCheckbox;
 
-    // 저장후 다음 액티비티로 넘어가게 해주는 버튼
-    Button buttonSave;
+        // 저장후 다음 액티비티로 넘어가게 해주는 버튼
+        Button buttonSave;
 
-    // 근로요일을 저장할 변수
-    int wDays;
+        // 근로요일을 저장할 변수
+        int wDays;
 
-    // 일하는 시간
-    int wHours;
+        // 일하는 시간
+        int wHours;
 
-    Intent intent = new Intent();
+        Intent intent = new Intent();
 
-    public class MainList {
+    public class MainList{
         public String mName;
         public String mCategory;
-
-        public MainList(String name, String category) {
+        public MainList(String name, String category){
             this.mName = name;
             this.mCategory = category;
         }
-
-        public String getmName() {
-            return mName;
-        }
-
-        public String getmCategory() {
-            return mCategory;
-        }
+        public String getmName() { return mName; }
+        public String getmCategory() { return mCategory; }
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_set_image);
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_set_image);
 
-        name = (EditText) findViewById(R.id.add_edittext_name);
-        cpName = (EditText) findViewById(R.id.add_edittext_cpName);  // 사업자명
-        enName = (EditText) findViewById(R.id.add_edittext_enName);
-        number = (EditText) findViewById(R.id.add_edittext_number); // 사업자 전화번호
-        address = (EditText) findViewById(R.id.add_edittext_address); // 사업자 주소
-        start = (EditText) findViewById(R.id.add_edittext_start); // 근무 시작일
-        salary = (EditText) findViewById(R.id.add_edittext_salary); // 돈
-        hours = (EditText) findViewById(R.id.add_edittext_hours);
+            name = (EditText)findViewById(R.id.add_edittext_name);
+            cpName = (EditText)findViewById(R.id.add_edittext_cpName);  // 사업자명
+            enName = (EditText)findViewById(R.id.add_edittext_enName);
+            number = (EditText)findViewById(R.id.add_edittext_number); // 사업자 전화번호
+            address = (EditText)findViewById(R.id.add_edittext_address); // 사업자 주소
+            start = (EditText)findViewById(R.id.add_edittext_start); // 근무 시작일
+            salary = (EditText)findViewById(R.id.add_edittext_salary); // 돈
+            hours = (EditText)findViewById(R.id.add_edittext_hours);
 
-        //체크박스
-        monCheckbox = (CheckBox) findViewById(R.id.monday);
-        tueCheckbox = (CheckBox) findViewById(R.id.tuesday);
-        wedCheckbox = (CheckBox) findViewById(R.id.wednesday);
-        thuCheckbox = (CheckBox) findViewById(R.id.thursday);
-        friCheckbox = (CheckBox) findViewById(R.id.friday);
-        satCheckbox = (CheckBox) findViewById(R.id.saturday);
-        sunCheckbox = (CheckBox) findViewById(R.id.sunday);
+            //체크박스
+            monCheckbox = (CheckBox)findViewById(R.id.monday);
+            tueCheckbox =  (CheckBox)findViewById(R.id.tuesday);
+            wedCheckbox =  (CheckBox)findViewById(R.id.wednesday);
+            thuCheckbox =  (CheckBox)findViewById(R.id.thursday);
+            friCheckbox =  (CheckBox)findViewById(R.id.friday);
+            satCheckbox =  (CheckBox)findViewById(R.id.saturday);
+            sunCheckbox =  (CheckBox)findViewById(R.id.sunday);
 
-        if (monCheckbox.isChecked()) {
-            wDays++;
-        } else if (tueCheckbox.isChecked()) {
-            wDays++;
-        } else if (wedCheckbox.isChecked()) {
-            wDays++;
-        } else if (thuCheckbox.isChecked()) {
-            wDays++;
-        } else if (friCheckbox.isChecked()) {
-            wDays++;
-        } else if (satCheckbox.isChecked()) {
-            wDays++;
-        } else if (sunCheckbox.isChecked()) {
-            wDays++;
-        }
+            if(monCheckbox.isChecked()){
+                wDays++;
+            }
+            else if (tueCheckbox.isChecked()){
+                wDays++;
+            }
+            else if (wedCheckbox.isChecked()){
+                wDays++;
+            }
+            else if (thuCheckbox.isChecked()){
+                wDays++;
+            }
+            else if (friCheckbox.isChecked()){
+                wDays++;
+            }
+            else if (satCheckbox.isChecked()){
+                wDays++;
+            }
+            else if (sunCheckbox.isChecked()){
+                wDays++;
+            }
 
 
-        String currentPhotoPath = this.getIntent().getStringExtra("path");
-        final Uri uriSelected = Uri.parse(this.getIntent().getStringExtra("path"));
-        File file = new File(currentPhotoPath);
-        Uri uri = Uri.fromFile(file);
+            String currentPhotoPath = this.getIntent().getStringExtra("path");
+            final Uri uriSelected = Uri.parse(this.getIntent().getStringExtra("path"));
+            File file = new File(currentPhotoPath);
+            Uri uri = Uri.fromFile(file);
 
-        Log.v("tag", "successI");
+            Log.v("tag", "successI");
 
 //            ImageView imageView = (ImageView) findViewById(R.id.set_iv);
 //            Glide.with(this)
@@ -167,148 +171,118 @@ public class setImageActivity extends AppCompatActivity {
 //                    .placeholder(R.drawable.ic_launcher_foreground)
 //                    .into(imageView);
 
-        // 2초후 다음 액티비티로 넘김
-        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                setImageActivity.this.convertImagetoText(uriSelected);
-                setImageActivity.this.convertImagetoText(uri);
-                Log.v("tag", "successT");
-            }
-        }, 1000L);
+            // 2초후 다음 액티비티로 넘김
+            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    setImageActivity.this.convertImagetoText(uriSelected);
+                    setImageActivity.this.convertImagetoText(uri);
+                    Log.v("tag", "successT");
+                }
+            },1000L);
 
-        buttonSave = (Button) findViewById(R.id.button_save);
-        buttonSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            buttonSave = (Button)findViewById(R.id.button_save);
+            buttonSave.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-                Intent result = new Intent(getApplicationContext(), setResultActivity.class);
-                //editText에서 수정된 값을 넘겨줌
-                eName = name.getText().toString();
-                //System.out.println("값: "+eName);
-                result.putExtra("eName", eName);
-                rCpName = cpName.getText().toString();
-                result.putExtra("rCpName", rCpName);
-                rEnName = enName.getText().toString();
-                result.putExtra("rEnName", rEnName);
-                rNumber = number.getText().toString();
-                result.putExtra("rNumber", rNumber);
-                rAddress = address.getText().toString();
-                result.putExtra("rAddress", rAddress);
-                rStart = start.getText().toString();
-                result.putExtra("rStart", rStart);
-                rSalary = salary.getText().toString();
-                result.putExtra("rSalary", rSalary);
-                rHours = hours.getText().toString();
-                result.putExtra("rHours", rHours);
-            }
-        });
-
-
-    } // end onCreate
-
-    private final void convertImagetoText(Uri imageUri) {
-        try {
-
-            inputImage = InputImage.fromFilePath(this, imageUri);
-
-            Task<Text> result =
-                    recognizer.process(inputImage)
-                            .addOnSuccessListener(new OnSuccessListener<Text>() {
-                                @Override
-                                public void onSuccess(Text visionText) {
-
-                                    tempText = visionText.getText();
-
-                                    System.out.println("성공 ->");
-                                    System.out.println(tempText);
-
-                                    splitResult(tempText);
-
-                                    usingNLPAPI Async2 = new usingNLPAPI();
-                                    Async2.execute();
-
-                                }
-                            })
-                            .addOnFailureListener(
-                                    new OnFailureListener() {
-
-                                        public void onFailure(@NonNull Exception e) {
-                                            // Task failed with an exception
-                                            // ...
-                                        }
-                                    });
-        } catch (Exception e) {
-
-        }
-
-    }// end convertImagetoText
-
-    public void splitResult(String string) {
+                    Intent result = new Intent(getApplicationContext(), setResultActivity.class);
+                    //editText에서 수정된 값을 넘겨줌
+                    eName = name.getText().toString();
+                    //System.out.println("값: "+eName);
+                   result.putExtra("eName", eName);
+                    rCpName = cpName.getText().toString();
+                    result.putExtra("rCpName", rCpName);
+                    rEnName = enName.getText().toString();
+                    result.putExtra("rEnName", rEnName);
+                    rNumber = number.getText().toString();
+                    result.putExtra("rNumber", rNumber);
+                    rAddress = address.getText().toString();
+                    result.putExtra("rAddress", rAddress);
+                    rStart = start.getText().toString();
+                    result.putExtra("rStart", rStart);
+                    rSalary = salary.getText().toString();
+                    result.putExtra("rSalary", rSalary);
+                    rHours = hours.getText().toString();
+                    result.putExtra("rHours", rHours);
+                }
+            });
 
 
-        resultText = string.split("\n");
 
+        } // end onCreate
 
-        // 정규직==표준근로-황민혜
+        private final void convertImagetoText(Uri imageUri) {
+            try {
 
-        for (int i = 0; i < resultText.length; i++) {
-            if (resultText[i].startsWith("황") || resultText[i].startsWith("황 ")) {
-                eName = resultText[i].substring(0, 4);
-                name.setText(eName); // 황 민혜
-                System.out.println(eName);
-            }
+                inputImage = InputImage.fromFilePath(this, imageUri);
 
-            if (resultText[i].contains("1. 근로계약기간")) {
+                Task<Text> result =
+                        recognizer.process(inputImage)
+                                .addOnSuccessListener(new OnSuccessListener<Text>() {
+                                    @Override
+                                    public void onSuccess(Text visionText) {
 
-                rStart = resultText[i].substring(12, resultText[i].indexOf("부터"));
-                start.setText(rStart);
+                                        tempText = visionText.getText();
+
+                                        System.out.println("성공");
+                                        System.out.println(tempText);
+
+                                        splitResult(tempText);
+
+                                        usingNLPAPI Async2 = new usingNLPAPI();
+                                        Async2.execute();
+
+                                    }
+                                })
+                                .addOnFailureListener(
+                                        new OnFailureListener() {
+
+                                            public void onFailure(@NonNull Exception e) {
+                                                // Task failed with an exception
+                                                // ...
+                                            }
+                                        });
+            } catch (Exception e) {
 
             }
 
+        }// end convertImagetoText
 
-            if (resultText[i].contains("4. 소정근로시간 :")) {
-
-                int startTime = resultText[i].indexOf("분부터") - 4;
-                int endTime = resultText[i].indexOf("분까지") - 4;
-                rHours = resultText[i].substring(resultText[i].indexOf("근로시간 :"), resultText[i].indexOf("분)"));
-
-                System.out.println("시작시간-" + startTime);
-                System.out.println("종료시간-" + endTime);
-                hours.setText(rHours + "분)");
-            }
-
-//            월(일, 시간)급 :
-            if (resultText[i].contains("월(일, 시간)급 :")) {
-
-                rSalary = resultText[i].substring(resultText[i].indexOf("월(일, 시간)급 :") + 11);
-
-                // 최저시급 9000 -> 최저시급 못미친다고 표시해줘야함 -> 토스트
-                salary.setText("9" + rSalary);
-
-            }
+        public void splitResult(String string){
 
 
 
 
+            resultText = string.split("\n");
 
 
 
 
+            for (int i = 0; i< resultText.length; i++) {
+                // 정규직==표준근로-황민혜
+                if(resultText[i].contains("표준")||resultText[i].contains("정함이")){
+                    // '황'포함 시
+                    if(resultText[i].startsWith("황")){
+                        eName=resultText[i].substring(0,2);
+                        name.setText(eName);
+                        System.out.println(eName);
+                    }
 
 
-            // 계약직-유희윤
-                    /*
-                else if (resultText[i].contains("정함이 없는")) {
+
+                }
+
+                // 계약직-유희윤
+                else if (resultText[i].contains("")) {
                     eName = resultText[i];
                     name.setText(resultText[i]);
 
                 }
-                */
-            // 청소년-이유나
-            else if (resultText[i].contains("가족관계") || resultText[i].contains("연소")) {
+                // 청소년-이유나
+                else if (resultText[i].contains("가족관계")||resultText[i].contains("연소")) {
 
-            }
+                }
 
                 /*
                 // 외국인
@@ -317,11 +291,12 @@ public class setImageActivity extends AppCompatActivity {
                 }
                 */
 
-            // 건설 일용직-문정인
-            else if (resultText[i].contains("건설")) {
-                eName = resultText[i];
+                // 건설 일용직-문정인
+                else if (resultText[i].contains("건설")) {
+                    eName= resultText[i];
 
-            }
+                }
+
 
 
 //                if(resultText[i].contains("CS")){
@@ -349,10 +324,10 @@ public class setImageActivity extends AppCompatActivity {
 //                    hours.setText("8"); //일하는 시간
 //                }
 
-            System.out.println("나눠진 값" + resultText[i]);
-        }
+                System.out.println("나눠진 값"+resultText[i]);
+            }
 
-    } // end splitResult
+        } // end splitResult
 
     public class usingNLPAPI extends AsyncTask<String, Void, String> {
 
@@ -409,27 +384,34 @@ public class setImageActivity extends AppCompatActivity {
 
 
                     String check = jsonElement.getAsJsonObject().get("return_object").getAsJsonObject().get("sentence").getAsJsonArray().get(0).getAsJsonObject().get("NE").getAsJsonArray().toString();
-                    System.out.println("에러검사: " + check);
-                    if (!check.equals("[]")) {
+                    System.out.println("에러검사: "+check);
+                    if(!check.equals("[]"))
+                    {
                         String type = jsonElement.getAsJsonObject().get("return_object").getAsJsonObject().get("sentence").getAsJsonArray().get(0).getAsJsonObject().get("NE").getAsJsonArray().get(0).getAsJsonObject().get("type").toString();
 
-                        if (type.equals("\"LCP_CAPITALCITY\"") || type.equals("\"LCP_PROVINCE\"") && type.equals("\"LCP_COUNTY\"") && type.equals("\"LCP_CITY\"")) {
+                        if(type.equals("\"LCP_CAPITALCITY\"") || type.equals("\"LCP_PROVINCE\"") && type.equals("\"LCP_COUNTY\"") && type.equals("\"LCP_CITY\""))
+
+                        {
                             rAddress = text;
-                            System.out.println("주소찾음: " + rAddress); //주소 제대로 나오는지 테스트
-                        } else if (type.equals("\"PS_NAME\"") && text.equals("대표자")) { // 이름 찾아서 넘겨주기
+                            System.out.println("주소찾음: "+ rAddress); //주소 제대로 나오는지 테스트
+                        }
+                        else if (type.equals("\"PS_NAME\"") && text.equals("대표자")){ // 이름 찾아서 넘겨주기
                             String rcpName = jsonElement.getAsJsonObject().get("return_object").getAsJsonObject().get("sentence").getAsJsonArray().get(0).getAsJsonObject().get("NE").getAsJsonArray().get(0).getAsJsonObject().get("text").toString();
 
-                            System.out.println("이름임: " + text);
+                            System.out.println("이름임:"+text);
                             rCpName = rcpName;
 
-                        } else if (type.equals("\"PS_NAME\"") && text.equals("근로자 ")) {
+                        }
+                        else if (type.equals("\"PS_NAME\"") && text.equals("근로자")){
                             String worker = jsonElement.getAsJsonObject().get("return_object").getAsJsonObject().get("sentence").getAsJsonArray().get(0).getAsJsonObject().get("NE").getAsJsonArray().get(0).getAsJsonObject().get("text").toString();
                             rEnName = worker;
                             System.out.println(worker);
 
-                        } else if (type.equals("\"DT_MONTH\"") || type.equals("\"DT_YEAR\"") && text.equals("기간")) {
+                        }
+                        else if (type.equals("\"DT_MONTH\"") || type.equals("\"DT_YEAR\"") && text.equals("기간")){
                             rStart = text;
-                        } else if (type.equals("\"OG\"") || text.equals("(주)")) {
+                        }
+                        else if(type.equals("\"OG\"") || text.equals("(주)")){
                             rCpName = text;
                         }
 
@@ -500,4 +482,4 @@ public class setImageActivity extends AppCompatActivity {
 
     } // end using NLPAPI
 
-}
+    }
