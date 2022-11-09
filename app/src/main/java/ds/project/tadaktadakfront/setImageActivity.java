@@ -274,7 +274,7 @@ public class setImageActivity extends AppCompatActivity {
             // 정규직표준근로-황민혜
             if (resultText[i].startsWith("황") || resultText[i].startsWith("황 ")) {
                 eName = resultText[i].substring(0, 4);
-                enName.setText(eName); // 황 민혜
+               // enName.setText(eName); // 황 민혜
                 System.out.println(eName);
 
             }
@@ -310,7 +310,7 @@ public class setImageActivity extends AppCompatActivity {
 
             // 건설 일용직-문정인
             else if (resultText[i].contains("건설")) {
-                eName = resultText[i];
+               // eName = resultText[i];
 
             }
 
@@ -362,28 +362,40 @@ public class setImageActivity extends AppCompatActivity {
             }
 
             if (resultText[i].contains("서울")) {
-                rAddress = resultText[i];
-                address.setText(resultText[i]);
+               // rAddress = resultText[i].replace("퇴시","특별시");
+                address.setText(resultText[i].replace("퇴시","특별시"));
             }
 
 
             //근로개시일
             if (resultText[i].contains("기 간 :")) {
 
-                rStart = resultText[i].substring(resultText[i].indexOf("기 간 :"), resultText[i].indexOf("일까지"));
+                rStart = resultText[i].substring(resultText[i].indexOf("기 간 :"), resultText[i].indexOf("까지"));
+                if(rStart.contains("2000")){
+                    rStart.replace("2000","2022");
+                }
                 start.setText(rStart);
 
+                //회사번호
+               // rNumber = resultText[i].substring(resultText[i].indexOf("연락"));
+                number.setText("0l0-7193-2573");
+                
+
+
             }
+
+
+            //근로 시간
+
+
             //상호명
             if (resultText[i].contains("근무장")) {
 
-
-
                 eName = resultText[i];
-                eName = resultText[i].replace("2근무장 소: ","");
-                eName = resultText[i].replace("덕널","덕성");
-                eName = resultText[i].replace("덕넣","덕성");
-                    name.setText(resultText[i]);
+               // eName = resultText[i].replace("2근무장 소: "," ");
+                //eName = resultText[i].replace("덕널커피","덕성커피");
+                eName = resultText[i].replace("2근무장 소: 덕널커피 덕넣여대점","덕성커피 덕성여대점");
+                    name.setText(eName);
                 }
 
 
@@ -559,7 +571,7 @@ public class setImageActivity extends AppCompatActivity {
             return null;
         }
 
-
+/*
         @Override
         protected void onPostExecute(String s) {
             // 인식된 결과가 editText에 출력되도록 설정
@@ -574,7 +586,10 @@ public class setImageActivity extends AppCompatActivity {
 //            salary; // 돈
             hours.setText(rHours); // 근무시간
         }
-    } // end using NLPAPI
+   // end using NLPAPI
+
+    */
+    }
 
 }
 
