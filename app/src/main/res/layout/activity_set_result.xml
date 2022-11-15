@@ -43,7 +43,8 @@
             android:fontFamily="@font/noto_sans_regualr"
             android:text="계약서 판별된 이유 작성"
             android:textColor="@color/black"
-            android:textSize="28sp"
+            android:textSize="18sp"
+
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/analysis_result"

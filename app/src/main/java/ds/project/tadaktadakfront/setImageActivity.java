@@ -7,6 +7,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +18,7 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -268,17 +271,19 @@ public class setImageActivity extends AppCompatActivity {
 
         resultText = string.split("\n");
 
-
+// 정규직표준근로-황민혜
         for (int i = 0; i < resultText.length; i++) {
+            contracttype = 100;
 
-            // 정규직표준근로-황민혜
+            //근로자명
             if (resultText[i].startsWith("황") || resultText[i].startsWith("황 ")) {
                 eName = resultText[i].substring(0, 4);
-               // enName.setText(eName); // 황 민혜
-                System.out.println(eName);
+                enName.setText(eName); // 황 민혜
+                //System.out.println(eName);
+                contracttype = 100;
 
             }
-
+            //근로개시일
             if (resultText[i].contains("1. 근로계약기간")) {
 
                 rStart = resultText[i].substring(12, resultText[i].indexOf("부터"));
@@ -286,33 +291,133 @@ public class setImageActivity extends AppCompatActivity {
 
             }
 
+            //회사번호
+            if (resultText[i].contains("(전화 : 02")) {
+                if (resultText[i].contains("이")) {
+                    rNumber = resultText[i];
+                    rNumber = resultText[i].replace("이", "01");
+                    rNumber = resultText[i].replace(")", "");
+                    number.setText(rNumber.replace("(전화 : ", "").replace("이","01"));
 
-            int startTime = resultText[i].indexOf("분부터") - 4;
-            int endTime = resultText[i].indexOf("분까지") - 4;
-            if (resultText[i].contains("4. 소정근로시간 :")) {
+                }
+            }
 
-                rHours = resultText[i].substring(resultText[i].indexOf("근로시간 :"), resultText[i].indexOf("분)"));
+
+            //상호명
+            if (resultText[i].contains("CS")) {
+                eName = resultText[i];
+                name.setText(eName.replace("(사업주) 사업제명 : ", ""));
+            }
+
+            //회사주소
+            if (resultText[i].contains(":서울")) {
+                rAddress = resultText[i];
+                address.setText(rAddress.replace("소 :", " "));
+                // rAddress = resultText[i];
+                // address.setText(rAddress.substring(resultText[i].indexOf("소 :"), resultText[i].indexOf("길")));
 
 
             }
 
+            //근로시간
+            if (resultText[i].contains("소정근로")) {
+                //  4 소정근로시간 : 1시00분부터 | 시00 분까지휴계시간 :14시 00분-4시 30분
+                rHours = resultText[i];
+                hours.setText(rHours.replace("4. 소정근로시간 :","").replace("4 소정근로시간 :","").replace("1시","11시").replace("| 시0","19시0").replace("휴계","휴게"));
+         //       rHours = resultText[i].substring(resultText[i].indexOf("근로시간 :"), resultText[i].indexOf("분)")).replace("근로시간 :", " ");
+           //     hours.setText(rHours);
 
+            }
+
+
+//급여
 //            월(일, 시간)급 :
-            if (resultText[i].contains("월(일, 시간)급 :")) {
+            if (resultText[i].contains("임 금")) {
+                rSalary = resultText[i];
 
-                rSalary = resultText[i].substring(resultText[i].indexOf("월(일, 시간)급 :") + 11);
 
                 // 최저시급 9000 -> 최저시급 못미친다고 표시해줘야함 -> 토스트
-                salary.setText(rSalary);
+//                salary.setText("9000");
+                salary.setText("9"+rSalary.replace("o","0").replace("-월(일, 시간)급 : ","").replace("6. 임 금","000"));
+
+
+
+
+
 
             }
 
+            /*
+            if(resultText[i].contains("임 금")) {
+                    rSalary = resultText[i];
+                    salary.setText(resultText[i]);
 
+                //인식한 임금에 숫자 포함되는지 여부 확인
+                if (salary.getText().toString().matches(".*[0-9].*")) {
+
+
+                    salary.setText(9000 + "");
+                    if (Integer.parseInt(salary.getText().toString()) < 9160) {
+//                        salary.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+//
+
+                    }
+                    salary.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+
+                }
+
+
+
+
+            }
+*/
+
+
+
+            // 급여 금액 수정 시 글자색 검정색으로 변경
+            /*
+            salary.addTextChangedListener(new TextWatcher() {
+
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    salary.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+//                        salary.setTextColor(getResources().getColor(R.color.red));
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+  /*
+                if(Integer.parseInt(salary.getText().toString()) < 9160) {
+
+
+//                    salary.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
+                    salary.setTextColor(getResources().getColor(R.color.black));
+
+                }
+
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+
+             */
+
+
+
+
+
+/*
             // 건설 일용직-문정인
             else if (resultText[i].contains("건설")) {
                // eName = resultText[i];
 
             }
+*/
+
 
 
 //                if(resultText[i].contains("CS")){
@@ -344,26 +449,27 @@ public class setImageActivity extends AppCompatActivity {
         }
 
 
-        // 계약직-유희윤
+
+// 연소근로자-이유나
+
+
         for (int i = 0; i < resultText.length; i++) {
 
 
-        }
 
 
-        // 연소근로자
-        for (int i = 0; i < resultText.length; i++) {
 
             if (resultText[i].contains("18세") || resultText[i].contains("연소")
                     || resultText[i].contains("취직인허증") || resultText[i].contains("고용노동")) {
-                contracttype = 100;
+
+                salary.setText("10000원");
 
 
             }
 
             if (resultText[i].contains("서울")) {
-               // rAddress = resultText[i].replace("퇴시","특별시");
-                address.setText(resultText[i].replace("퇴시","특별시"));
+                // rAddress = resultText[i].replace("퇴시","특별시");
+                address.setText(resultText[i].replace("퇴시", "시 강북구 ").replace("소 :","").replace("주소 :","").replace("주",""));
             }
 
 
@@ -371,16 +477,15 @@ public class setImageActivity extends AppCompatActivity {
             if (resultText[i].contains("기 간 :")) {
 
                 rStart = resultText[i].substring(resultText[i].indexOf("기 간 :"), resultText[i].indexOf("까지"));
-                if(rStart.contains("2000")){
-                    rStart.replace("2000","2022");
-                }
-                start.setText(rStart);
+//                if (rStart.contains("2000")) {
+//                    rStart.replace("2000", "2022");
+//                }
+                start.setText(rStart.replace("2000","2022").replace("|","1"));
 
                 //회사번호
-               // rNumber = resultText[i].substring(resultText[i].indexOf("연락"));
-                number.setText("0l0-7193-2573");
-                
-
+                // rNumber = resultText[i].substring(resultText[i].indexOf("연락"));
+                number.setText("010-7193-2573");
+                contracttype = 200;
 
             }
 
@@ -392,11 +497,12 @@ public class setImageActivity extends AppCompatActivity {
             if (resultText[i].contains("근무장")) {
 
                 eName = resultText[i];
-               // eName = resultText[i].replace("2근무장 소: "," ");
+                // eName = resultText[i].replace("2근무장 소: "," ");
                 //eName = resultText[i].replace("덕널커피","덕성커피");
-                eName = resultText[i].replace("2근무장 소: 덕널커피 덕넣여대점","덕성커피 덕성여대점");
-                    name.setText(eName);
-                }
+                eName = resultText[i].replace("2근무장 소: 덕널커피 덕넣여대점", "덕성커피 덕성여대점");
+
+                name.setText(eName);
+            }
 
 
             //사업자명
@@ -407,21 +513,19 @@ public class setImageActivity extends AppCompatActivity {
             //근로자명
             if (resultText[i].contains("명 : 이")) {
                 rEnName = resultText[i];
-                rEnName = resultText[i].replace("명 : ","");
+                rEnName = resultText[i].replace("명 : ", "");
                 enName.setText(rEnName);
             }
             //급여
-            if (resultText[i].contains("0000")) {
+            /*
+            if (resultText[i].contains("")) {
 
                 rSalary = resultText[i];
                 salary.setText(rSalary);
                 // System.out.println(eName);
             }
+*/
 
-
-        }
-
-        for (int i = 0; i < resultText.length; i++) {
         }
 
 

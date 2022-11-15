@@ -271,7 +271,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/button_resource"
-
+        android:text="check"
         android:layout_margin="@dimen/big_padding"
         android:textColor="@color/buttonLabel"/>
     <androidx.appcompat.widget.AppCompatButton

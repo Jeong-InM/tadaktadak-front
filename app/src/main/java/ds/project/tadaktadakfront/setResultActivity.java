@@ -57,6 +57,12 @@ public class setResultActivity extends AppCompatActivity {
         //analysisResult.setText(resultType);
 
         if(resultType == 100){
+            analysisResult.setText("정규직 근로 계약서");
+            analysisReason.setText(getString(R.string.regular));
+        }
+
+
+        if(resultType == 200){
             analysisResult.setText("청소년 근로 계약서");
             analysisReason.setText(getString(R.string.underage));
         }
