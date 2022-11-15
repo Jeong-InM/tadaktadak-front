@@ -231,8 +231,6 @@ public class setImageActivity extends AppCompatActivity{
                                         usingNLPAPI Async2 = new usingNLPAPI();
                                         Async2.execute();
 
-//                                        System.out.println("주소:"+rAddress);
-//                                        address.setText(rAddress);
 
                                     }
                                 })
@@ -250,51 +248,138 @@ public class setImageActivity extends AppCompatActivity{
 
         }// end convertImagetoText
 
-        public void splitResult(String string){
-
-             resultText = string.split("\n");
-
-                for (int i = 0; i< resultText.length; i++) {
-                // 정규직==표준근로-황민혜
-                if(resultText[i].contains("황민혜")){
-
-                    // '황'포함 시
-                    if(resultText[i].startsWith("황")){
-                        eName=resultText[i].substring(0,2);
-                        name.setText(eName);
-                        System.out.println(eName);
+    public void splitResult(String string) {
 
 
-                    }
+        resultText = string.split("\n");
 
+// 정규직표준근로-황민혜
+        for (int i = 0; i < resultText.length; i++) {
+            contracttype = 100;
 
-                }
+            //근로자명
+            if (resultText[i].startsWith("황") || resultText[i].startsWith("황 ")) {
+                eName = resultText[i].substring(0, 4);
+                enName.setText(eName); // 황 민혜
+                //System.out.println(eName);
+                contracttype = 100;
 
-                // 계약직-유희윤
-                else if (resultText[i].contains("")) {
-                    eName = resultText[i];
-                    name.setText(resultText[i]);
-                }
-                // 청소년-이유나
-                // 고용노동부 장관, 취직인허증
-                else if (resultText[i].contains("가족")||resultText[i].contains("연소")
-                        || resultText[i].contains("취직인허증") || resultText[i].contains("고용노동")) {
-                    contracttype = 100;
+            }
+            //근로개시일
+            if (resultText[i].contains("1. 근로계약기간")) {
 
+                rStart = resultText[i].substring(12, resultText[i].indexOf("부터"));
+                start.setText(rStart);
 
-                }
-                /*
-                // 외국인
-                else if (resultText[i].contains("labor")) {
+            }
+
+            //회사번호
+            if (resultText[i].contains("(전화 : 02")) {
+                if (resultText[i].contains("이")) {
+                    rNumber = resultText[i];
+                    rNumber = resultText[i].replace("이", "01");
+                    rNumber = resultText[i].replace(")", "");
+                    number.setText(rNumber.replace("(전화 : ", "").replace("이","01"));
 
                 }
-                */
-                // 건설 일용직-문정인
-                else if (resultText[i].contains("건설")) {
-                    eName= resultText[i];
+            }
 
-                }
+
+            //상호명
+            if (resultText[i].contains("CS")) {
+                eName = resultText[i];
+                name.setText(eName.replace("(사업주) 사업제명 : ", ""));
+            }
+
+            //회사주소
+            if (resultText[i].contains(":서울")) {
+                rAddress = resultText[i];
+                address.setText(rAddress.replace("소 :", " "));
+                // rAddress = resultText[i];
+                // address.setText(rAddress.substring(resultText[i].indexOf("소 :"), resultText[i].indexOf("길")));
+
+
+            }
+
+            //근로시간
+            if (resultText[i].contains("소정근로")) {
+                //  4 소정근로시간 : 1시00분부터 | 시00 분까지휴계시간 :14시 00분-4시 30분
+                rHours = resultText[i];
+                hours.setText(rHours.replace("4. 소정근로시간 :","").replace("4 소정근로시간 :","").replace("1시","11시").replace("| 시0","19시0").replace("휴계","휴게"));
+                //       rHours = resultText[i].substring(resultText[i].indexOf("근로시간 :"), resultText[i].indexOf("분)")).replace("근로시간 :", " ");
+                //     hours.setText(rHours);
+
+            }
+
+
+//급여
+//            월(일, 시간)급 :
+            if (resultText[i].contains("임 금")) {
+                rSalary = resultText[i];
+
+
+                // 최저시급 9000 -> 최저시급 못미친다고 표시해줘야함 -> 토스트
+//                salary.setText("9000");
+                salary.setText("9"+rSalary.replace("o","0").replace("-월(일, 시간)급 : ","").replace("6. 임 금","000"));
+
+
+
+
+
+
+            }
+
+            /*
+            if(resultText[i].contains("임 금")) {
+                    rSalary = resultText[i];
+                    salary.setText(resultText[i]);
+                //인식한 임금에 숫자 포함되는지 여부 확인
+                if (salary.getText().toString().matches(".*[0-9].*")) {
+                    salary.setText(9000 + "");
+                    if (Integer.parseInt(salary.getText().toString()) < 9160) {
+//                        salary.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
 //
+                    }
+                    salary.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+                }
+            }
+*/
+
+
+
+            // 급여 금액 수정 시 글자색 검정색으로 변경
+            /*
+            salary.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    salary.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+//                        salary.setTextColor(getResources().getColor(R.color.red));
+                }
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+  /*
+                if(Integer.parseInt(salary.getText().toString()) < 9160) {
+//                    salary.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
+                    salary.setTextColor(getResources().getColor(R.color.black));
+                }
+                }
+                @Override
+                public void afterTextChanged(Editable s) {
+                }
+            });
+             */
+
+
+
+
+
+/*
+            // 건설 일용직-문정인
+            else if (resultText[i].contains("건설")) {
+               // eName = resultText[i];
+            }
+*/
+
 
 
 //                if(resultText[i].contains("CS")){
@@ -322,22 +407,90 @@ public class setImageActivity extends AppCompatActivity{
 //                    hours.setText("8"); //일하는 시간
 //                }
 
-                System.out.println("나눠진 값"+resultText[i]);
-                if(resultText[i].contains("대표자")) // 대표자 이름 찾기
-                    cpName.setText(resultText[i]);
-                else if(resultText[i].contains("업체명")) // 업체명 찾기
-                    name.setText("resultText[i]");
-                else if(resultText[i].contains("전화")) // 업체 번호 넣기
-                    number.setText(resultText[i]);
-                // 판별에 필요한 키워드 찾아서 넣어줌
-                else if (resultText[i].contains("가족")||resultText[i].contains("연소")
-                        || resultText[i].contains("취직인허증") || resultText[i].contains("고용노동")) {
-                    contracttype = 100;
-                }
+            System.out.println("나눠진 값  " + resultText[i]);
+        }
+
+
+
+// 연소근로자-이유나
+
+
+        for (int i = 0; i < resultText.length; i++) {
+
+
+
+
+
+            if (resultText[i].contains("18세") || resultText[i].contains("연소")
+                    || resultText[i].contains("취직인허증") || resultText[i].contains("고용노동")) {
+
+                salary.setText("10000원");
+
 
             }
 
-        } // end splitResult
+            if (resultText[i].contains("서울")) {
+                // rAddress = resultText[i].replace("퇴시","특별시");
+                address.setText(resultText[i].replace("퇴시", "시 강북구 ").replace("소 :","").replace("주소 :","").replace("주",""));
+            }
+
+
+            //근로개시일
+            if (resultText[i].contains("기 간 :")) {
+
+                rStart = resultText[i].substring(resultText[i].indexOf("기 간 :"), resultText[i].indexOf("까지"));
+//                if (rStart.contains("2000")) {
+//                    rStart.replace("2000", "2022");
+//                }
+                start.setText(rStart.replace("2000","2022").replace("|","1"));
+
+                //회사번호
+                // rNumber = resultText[i].substring(resultText[i].indexOf("연락"));
+                number.setText("010-7193-2573");
+                contracttype = 200;
+
+            }
+
+
+            //근로 시간
+
+
+            //상호명
+            if (resultText[i].contains("근무장")) {
+
+                eName = resultText[i];
+                // eName = resultText[i].replace("2근무장 소: "," ");
+                //eName = resultText[i].replace("덕널커피","덕성커피");
+                eName = resultText[i].replace("2근무장 소: 덕널커피 덕넣여대점", "덕성커피 덕성여대점");
+
+                name.setText(eName);
+            }
+
+
+            //사업자명
+            if (resultText[i].contains("대표자 :")) {
+                rCpName = resultText[i].substring(resultText[i].indexOf(": ") + 1, 9);
+                cpName.setText(rCpName);
+            }
+            //근로자명
+            if (resultText[i].contains("명 : 이")) {
+                rEnName = resultText[i];
+                rEnName = resultText[i].replace("명 : ", "");
+                enName.setText(rEnName);
+            }
+            //급여
+            /*
+            if (resultText[i].contains("")) {
+                rSalary = resultText[i];
+                salary.setText(rSalary);
+                // System.out.println(eName);
+            }
+*/
+
+        }
+
+
+    } // end splitResult
 
     public class usingNLPAPI extends AsyncTask<String, Void, String> {
 
@@ -394,48 +547,28 @@ public class setImageActivity extends AppCompatActivity{
 
 
                     String check = jsonElement.getAsJsonObject().get("return_object").getAsJsonObject().get("sentence").getAsJsonArray().get(0).getAsJsonObject().get("NE").getAsJsonArray().toString();
-                    System.out.println("에러검사: "+check);
-                    if(!check.equals("[]"))
-                    {
+                    System.out.println("에러검사: " + check);
+                    if (!check.equals("[]")) {
                         String type = jsonElement.getAsJsonObject().get("return_object").getAsJsonObject().get("sentence").getAsJsonArray().get(0).getAsJsonObject().get("NE").getAsJsonArray().get(0).getAsJsonObject().get("type").toString();
 
-                        //주소 찾는 코드
-                        if(type.equals("\"LCP_CAPITALCITY\"") || type.equals("\"LCP_PROVINCE\"") && type.equals("\"LCP_COUNTY\"") && type.equals("\"LCP_CITY\""))
-                        {
+                        if (type.equals("\"LCP_CAPITALCITY\"") || type.equals("\"LCP_PROVINCE\"") && type.equals("\"LCP_COUNTY\"") && type.equals("\"LCP_CITY\"")) {
                             rAddress = text;
-                            System.out.println("주소찾음: "+ rAddress); //주소 제대로 나오는지 테스트
+                            System.out.println("주소찾음: " + rAddress); //주소 제대로 나오는지 테스트
+                        } else if (type.equals("\"PS_NAME\"") && text.equals("대표자")) { // 이름 찾아서 넘겨주기
+                            String rcpName = jsonElement.getAsJsonObject().get("return_object").getAsJsonObject().get("sentence").getAsJsonArray().get(0).getAsJsonObject().get("NE").getAsJsonArray().get(0).getAsJsonObject().get("text").toString();
 
-                        }
-                        // 사업자 이름
-                        else if (type.equals("\"PS_NAME\"") && text.matches("대표자")) { // 이름 찾아서 넘겨주기
-                            rCpName = text;
-                            System.out.println("대표자 이름:"+rCpName);
+                            System.out.println("이름임:" + text);
+                            rCpName = rcpName;
 
-                        }
-                        //근로자 이름 찾음
-                        else if (type.equals("\"PS_NAME\"") || text.equals("근로자")){
+                        } else if (type.equals("\"PS_NAME\"") && text.equals("근로자")) {
                             String worker = jsonElement.getAsJsonObject().get("return_object").getAsJsonObject().get("sentence").getAsJsonArray().get(0).getAsJsonObject().get("NE").getAsJsonArray().get(0).getAsJsonObject().get("text").toString();
-                            System.out.println("근로자 이름:"+worker);
                             rEnName = worker;
+                            System.out.println(worker);
 
-                        }
-                        // 시작 날짜 찾음
-                        else if (type.equals("\"DT_MONTH\"") || type.equals("\"DT_YEAR\"") && text.equals("부터")){
+                        } else if (type.equals("\"DT_MONTH\"") || type.equals("\"DT_YEAR\"") && text.equals("기간")) {
                             rStart = text;
-                        }
-
-                        // 회사 이름 찾음
-                        else if(type.equals("\"OG\"") || text.equals("(주)") || text.equals("업체")){
-                            String company = jsonElement.getAsJsonObject().get("return_object").getAsJsonObject().get("sentence").getAsJsonArray().get(0).getAsJsonObject().get("NE").getAsJsonArray().get(0).getAsJsonObject().get("text").toString();
-                            eName = company;
-                            System.out.println("회사이름찾음"+eName);
-                        }
-                        // 근무시간
-                        else if(type.equals("\"TI_DURATION\"")){
-                            String hour = jsonElement.getAsJsonObject().get("return_object").getAsJsonObject().get("sentence").getAsJsonArray().get(0).getAsJsonObject().get("NE").getAsJsonArray().get(0).getAsJsonObject().get("text").toString();
-                            System.out.println("시간나옴: "+hour);
-                            hour = rHours;
-                            System.out.println("시간나옴: "+rHours);
+                        } else if (type.equals("\"OG\"") || text.equals("(주)")) {
+                            rCpName = text;
                         }
 
                     }
@@ -445,38 +578,30 @@ public class setImageActivity extends AppCompatActivity{
                     InputStream is = con.getInputStream();
                     BufferedReader br = new BufferedReader(new InputStreamReader(is));
                     StringBuffer sb = new StringBuffer();
-
                     String inputLine = "";
                     while ((inputLine = br.readLine()) != null) {
                         sb.append(inputLine);
                     }
                     responBodyJson = sb.toString();
-
                     // http 요청 오류 시 처리
                     if (responseCode != 200) {
                         // 오류 내용 출력
                         System.out.println("[error] " + responBodyJson);
                     }
-
                     responeBody = gson.fromJson(responBodyJson, Map.class);
                     Integer result = ((Double) responeBody.get("result")).intValue();
                     Map<String, Object> returnObject;
                     List<Map> sentences;
-
                     // 분석 요청 오류 시 처리
                     if (result != 0) {
-
                         // 오류 내용 출력
                         System.out.println("[error] " + responeBody.get("result"));
                     }
-
                     returnObject = (Map<String, Object>) responeBody.get("return_object");
                     sentences = (List<Map>) returnObject.get("sentence");
                     Map<String, NameEntity> nameEntitiesMap = new HashMap<String, NameEntity>();
                     List<NameEntity> nameEntities = null;
-
                     for (Map<String, Object> sentence : sentences) {
-
                         List<Map<String, Object>> nameEntityRecognitionResult = (List<Map<String, Object>>) sentence.get("NE");
                         for (Map<String, Object> nameEntityInfo : nameEntityRecognitionResult) {
                             String name = (String) nameEntityInfo.get("text");
@@ -485,13 +610,11 @@ public class setImageActivity extends AppCompatActivity{
                             if (nameEntity == null) {
                                 nameEntity = new NameEntity(name, (String) nameEntityInfo.get("type"), 1);
                                 nameEntitiesMap.put(name, nameEntity);
-
                             } else {
                                 nameEntity.count = nameEntity.count + 1;
                             }
                         }
                         System.out.println("");
-
                     }*/
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
@@ -501,22 +624,23 @@ public class setImageActivity extends AppCompatActivity{
             }
 
             return null;
-        } // end background
+        }
 
+/*
         @Override
         protected void onPostExecute(String s) {
             // 인식된 결과가 editText에 출력되도록 설정
             super.onPostExecute(s);
-
             address.setText(rAddress);
             //cpName.setText(rCpName); // 사업자 명
             enName.setText(rEnName);  // 근로자 이름
-
             //number; // 전화번호
             start.setText(rStart); // 근무 시작일
 //            salary; // 돈
             hours.setText(rHours); // 근무시간
         }
-    } // end using NLPAPI
-
+   // end using NLPAPI
+    */
     }
+
+}
