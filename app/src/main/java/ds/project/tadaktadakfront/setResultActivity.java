@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -38,6 +39,9 @@ public class setResultActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ChatbotActivity.class);
                 startActivity(intent);
+
+                Toast toast = Toast.makeText(getApplicationContext(), "챗봇에게 먼저 인사해보세요.", Toast.LENGTH_LONG);
+                toast.show();
             }
         });
 
