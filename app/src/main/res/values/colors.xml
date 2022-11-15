@@ -16,6 +16,7 @@
     <color name="back">#F9FBFF</color>
     <color name="yellow">#FFF380</color>
     <color name="gray">#EEEEEE</color>
+    <color name="red">#FF0000</color>
 
     <color name="buttonLabel">#FFFFFF</color>
 </resources>
