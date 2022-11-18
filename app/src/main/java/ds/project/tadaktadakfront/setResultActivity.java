@@ -46,6 +46,7 @@ public class setResultActivity extends AppCompatActivity {
         });
 
         Intent result = getIntent();
+
         // set Image에서 넘어온 회사명 적용하기
         companyName = (TextView) findViewById(R.id.company_name);
         String resultName = result.getStringExtra("resultEname");
@@ -57,8 +58,10 @@ public class setResultActivity extends AppCompatActivity {
 
         // setImage에서 값 판별값 받아오기
         int resultType =  result.getIntExtra("resultType",0);
+
         System.out.println("계약서 종류: "+resultType);
         //analysisResult.setText(resultType);
+
 
         if(resultType == 100){
             analysisResult.setText("정규직 근로 계약서");
@@ -70,6 +73,7 @@ public class setResultActivity extends AppCompatActivity {
             analysisResult.setText("청소년 근로 계약서");
             analysisReason.setText(getString(R.string.underage));
         }
+
         // 결과가 없을경우
         else if(resultType == 0){
             analysisResult.setText("판별이 어렵습니다.");

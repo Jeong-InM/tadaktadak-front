@@ -162,6 +162,7 @@ public class setImageActivity extends AppCompatActivity{
             }
 
 
+
             String currentPhotoPath = this.getIntent().getStringExtra("path");
             final Uri uriSelected = Uri.parse(this.getIntent().getStringExtra("path"));
             File file = new File(currentPhotoPath);
@@ -181,6 +182,8 @@ public class setImageActivity extends AppCompatActivity{
 
             buttonSave = (Button)findViewById(R.id.button_save);
             buttoncheck = (Button)findViewById(R.id.button_check);
+
+            //
             buttoncheck.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -192,6 +195,8 @@ public class setImageActivity extends AppCompatActivity{
                      startActivity(intent);
                 }
             });
+
+
 
             buttonSave.setOnClickListener(new View.OnClickListener() {
                 @Override

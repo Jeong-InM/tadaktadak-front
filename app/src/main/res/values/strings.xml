@@ -28,7 +28,15 @@
     <string name="empty_not_saved">Word not saved because it is empty.</string>
     <string name="add_word">Add word</string>
 
-    <string name="underage">월 임금 지급일 - 10 일\n매주 5 일 근무\n상여금 없음\n시급 이 2022년 최저시급 이상 입니다.\n가족관계 증명서 제출 - O ,\n취직인허증 제출 - O \n</string>
+    <!--
+    임금 지급일-정수형
+    근무 일수-정수형
+    최저시급 이상/이하 -문자형
+    문서 제출여부 - 문자형
+    !-->
+
+    <string name="underage">월 임금 지급일 - %d 일\n매주 %d 일 근무\n상여금 %s\n시급이 2022년 최저시급 %s 입니다.\n가족관계 증명서 제출 - %s ,\n취직인허증 제출 - %s \n</string>
+
     <string name="regular">월 임금 지급일 - 10 일\n매주 5 일 근무\n휴게시간 30 분 \n상여금 없음\n시급 이 2022년 최저시급 이하 입니다. \n다시 확인해주세요. </string>
 
     <string-array name="okornot">
@@ -41,6 +49,7 @@
         <item>근로시간 초과</item>
         <item>정규직</item>
         <item>비정규직</item>
+        <item>일용직</item>
         <item>프리랜서</item>
     </string-array>
 
@@ -49,6 +58,7 @@
         <item>근로시간 초과입니다.</item>
         <item>정규직으로 보입니다.</item>
         <item>비정규직으로 보입니다.</item>
+        <item>일용직으로 보입니다.</item>
         <item>프리랜서로 보입니다.</item>
     </string-array>
 
