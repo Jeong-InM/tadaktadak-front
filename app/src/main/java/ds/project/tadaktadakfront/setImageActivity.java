@@ -96,7 +96,7 @@ public class setImageActivity extends AppCompatActivity{
         Button buttoncheck;
 
         // 근로요일을 저장할 변수
-        int wDays;
+        int wDays=0;
 
         // 일하는 시간
         int wHours;
@@ -140,25 +140,26 @@ public class setImageActivity extends AppCompatActivity{
             sunCheckbox =  (CheckBox)findViewById(R.id.sunday);
 
             if(monCheckbox.isChecked()){
-                wDays++;
+                wDays+=1;
             }
             else if (tueCheckbox.isChecked()){
-                wDays++;
+                wDays+=1;
             }
             else if (wedCheckbox.isChecked()){
-                wDays++;
+                wDays+=1;
             }
             else if (thuCheckbox.isChecked()){
-                wDays++;
+                wDays+=1;
             }
             else if (friCheckbox.isChecked()){
-                wDays++;
+//                wDays++;
+                wDays+=1;
             }
             else if (satCheckbox.isChecked()){
-                wDays++;
+                wDays+=1;
             }
             else if (sunCheckbox.isChecked()){
-                wDays++;
+                wDays+=1;
             }
 
 
@@ -190,6 +191,7 @@ public class setImageActivity extends AppCompatActivity{
                     Intent intent  = new Intent(getApplicationContext(), setResultActivity.class);
                     intent.putExtra("resultEname",name.getText().toString());
                     System.out.println("type "+contracttype);
+                    System.out.println("####총 클릭수 : " + wDays);
                     //intent.putExtra("resultType", type);
                     intent.putExtra("resultType", contracttype);
                      startActivity(intent);
@@ -299,7 +301,7 @@ public class setImageActivity extends AppCompatActivity{
             //회사주소
             if (resultText[i].contains(":서울")) {
                 rAddress = resultText[i];
-                address.setText(rAddress.replace("소 :", " "));
+                address.setText(rAddress.replace("소 :", " ").replace("수","4"));
                 // rAddress = resultText[i];
                 // address.setText(rAddress.substring(resultText[i].indexOf("소 :"), resultText[i].indexOf("길")));
 
@@ -422,12 +424,9 @@ public class setImageActivity extends AppCompatActivity{
 
         for (int i = 0; i < resultText.length; i++) {
 
-
-
-
-
+            //|| resultText[i].contains("고용노동")
             if (resultText[i].contains("18세") || resultText[i].contains("연소")
-                    || resultText[i].contains("취직인허증") || resultText[i].contains("고용노동")) {
+                    || resultText[i].contains("취직인허증") ) {
 
                 salary.setText("10000원");
 
@@ -436,17 +435,18 @@ public class setImageActivity extends AppCompatActivity{
 
             if (resultText[i].contains("서울")) {
                 // rAddress = resultText[i].replace("퇴시","특별시");
-                address.setText(resultText[i].replace("퇴시", "시 강북구 ").replace("소 :","").replace("주소 :","").replace("주",""));
+                address.setText(resultText[i].replace("퇴시", "시 강북구 ").replace("소 :","").replace("주소 :","").replace("주","").replace("수","4"));
             }
 
 
             //근로개시일
             if (resultText[i].contains("기 간 :")) {
 
-                rStart = resultText[i].substring(resultText[i].indexOf("기 간 :"), resultText[i].indexOf("까지"));
+                rStart = resultText[i].substring(resultText[i].indexOf("20"), resultText[i].indexOf("부터"));
 //                if (rStart.contains("2000")) {
 //                    rStart.replace("2000", "2022");
 //                }
+
                 start.setText(rStart.replace("2000","2022").replace("|","1"));
 
                 //회사번호
@@ -493,6 +493,21 @@ public class setImageActivity extends AppCompatActivity{
 */
 
         }
+
+        // 일용직근로-문정인
+        for (int j=0;j<resultText.length;j++) {
+            //근로자명
+            if(resultText[j].contains("건설")) {
+
+            }
+            //상호명
+            //사업자명
+            //회사번호
+            //
+
+        }
+
+
 
 
     } // end splitResult
