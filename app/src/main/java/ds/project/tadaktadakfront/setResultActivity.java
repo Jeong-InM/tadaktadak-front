@@ -62,16 +62,30 @@ public class setResultActivity extends AppCompatActivity {
         System.out.println("계약서 종류: "+resultType);
         //analysisResult.setText(resultType);
 
+        // 근무일수
+        int workDays = result.getIntExtra("workDays",0);
+
+        // 상여금 여부 판별
+        String bonus = "";
+        boolean ifBonus = result.getBooleanExtra("bonus",false);
+        if(ifBonus == false){
+            bonus = "있음";
+        }else
+            bonus = "없음";
+        // set like  %1$s in string.xml
+
+        // 임금지급날
+        String payday = result.getStringExtra("payday");
 
         if(resultType == 100){
             analysisResult.setText("정규직 근로 계약서");
-            analysisReason.setText(getString(R.string.regular));
+            analysisReason.setText(getString(R.string.regular,payday,workDays,bonus));
         }
 
 
         if(resultType == 200){
             analysisResult.setText("청소년 근로 계약서");
-            analysisReason.setText(getString(R.string.underage));
+            analysisReason.setText(getString(R.string.underage,payday,workDays,bonus));
         }
 
         // 결과가 없을경우

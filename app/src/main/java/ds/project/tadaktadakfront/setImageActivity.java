@@ -72,6 +72,7 @@ public class setImageActivity extends AppCompatActivity{
         public EditText start; // 근무 시작일
         public EditText salary; // 돈
         public EditText hours; // 근무시간
+        public EditText payday;
 
         String eName; // editText에 들어갈 상호명
         String rCpName; // editText에 들어갈 사업자
@@ -81,6 +82,7 @@ public class setImageActivity extends AppCompatActivity{
         String rStart; // editText에 들어갈 근무 시작일
         String rSalary; // editText에 들어갈 돈
         String rHours; // editText에 들어갈 근무시간
+        String rPayday; // editText에 들어갈 임금지급일
 
         // 근로시간용 체크박스
         CheckBox monCheckbox;
@@ -96,7 +98,7 @@ public class setImageActivity extends AppCompatActivity{
         Button buttoncheck;
 
         // 근로요일을 저장할 변수
-        int wDays=0;
+        int wDays;
 
         // 일하는 시간
         int wHours;
@@ -104,6 +106,8 @@ public class setImageActivity extends AppCompatActivity{
         // 판별에 필요한 변수 - 판별값마다 다른 값 준 후 intent로 넘기기
         int contracttype = 0;
 
+        // 상어금 여부 확인
+        boolean bonus;
 
     public class MainList{
         public String mName;
@@ -121,48 +125,23 @@ public class setImageActivity extends AppCompatActivity{
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_set_image);
 
-            name = (EditText)findViewById(R.id.add_edittext_name);
+            name = (EditText)findViewById(R.id.add_edittext_name); // 상호명
             cpName = (EditText)findViewById(R.id.add_edittext_cpName);  // 사업자명
-            enName = (EditText)findViewById(R.id.add_edittext_enName);
+            enName = (EditText)findViewById(R.id.add_edittext_enName); // 근로자 이름
             number = (EditText)findViewById(R.id.add_edittext_number); // 사업자 전화번호
-            address = (EditText)findViewById(R.id.add_edittext_address); // 사업자 주소
-            start = (EditText)findViewById(R.id.add_edittext_start); // 근무 시작일
-            salary = (EditText)findViewById(R.id.add_edittext_salary); // 돈
+            start = (EditText)findViewById(R.id.add_edittext_start); // 근로개시일
+            salary = (EditText)findViewById(R.id.add_edittext_salary);
+            payday = (EditText)findViewById(R.id.add_edittext_payday);
             hours = (EditText)findViewById(R.id.add_edittext_hours);
+            address = (EditText)findViewById(R.id.add_edittext_address);
 
-            //체크박스
             monCheckbox = (CheckBox)findViewById(R.id.monday);
-            tueCheckbox =  (CheckBox)findViewById(R.id.tuesday);
-            wedCheckbox =  (CheckBox)findViewById(R.id.wednesday);
-            thuCheckbox =  (CheckBox)findViewById(R.id.thursday);
-            friCheckbox =  (CheckBox)findViewById(R.id.friday);
-            satCheckbox =  (CheckBox)findViewById(R.id.saturday);
+            tueCheckbox= (CheckBox)findViewById(R.id.tuesday);
+            wedCheckbox = (CheckBox)findViewById(R.id.wednesday);
+            thuCheckbox = (CheckBox)findViewById(R.id.thursday);
+            friCheckbox = (CheckBox)findViewById(R.id.friday);
+            satCheckbox =  (CheckBox)findViewById(R.id.saturday); //
             sunCheckbox =  (CheckBox)findViewById(R.id.sunday);
-
-            if(monCheckbox.isChecked()){
-                wDays+=1;
-            }
-            else if (tueCheckbox.isChecked()){
-                wDays+=1;
-            }
-            else if (wedCheckbox.isChecked()){
-                wDays+=1;
-            }
-            else if (thuCheckbox.isChecked()){
-                wDays+=1;
-            }
-            else if (friCheckbox.isChecked()){
-//                wDays++;
-                wDays+=1;
-            }
-            else if (satCheckbox.isChecked()){
-                wDays+=1;
-            }
-            else if (sunCheckbox.isChecked()){
-                wDays+=1;
-            }
-
-
 
             String currentPhotoPath = this.getIntent().getStringExtra("path");
             final Uri uriSelected = Uri.parse(this.getIntent().getStringExtra("path"));
@@ -188,10 +167,37 @@ public class setImageActivity extends AppCompatActivity{
             buttoncheck.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     Intent intent  = new Intent(getApplicationContext(), setResultActivity.class);
+
+
+                    if(monCheckbox.isChecked()){
+                        wDays++;
+                    }
+                    if (tueCheckbox.isChecked()){
+                        wDays++;
+                    }
+                    if (wedCheckbox.isChecked()){
+                        wDays++;
+                    }
+                    if (thuCheckbox.isChecked()){
+                        wDays++;
+                    }
+                    if (friCheckbox.isChecked()){
+                        wDays++;
+                    }
+                    if (satCheckbox.isChecked()){
+                        wDays++;
+                    }
+                    if (sunCheckbox.isChecked()){
+                        wDays++;
+                    }
                     intent.putExtra("resultEname",name.getText().toString());
                     System.out.println("type "+contracttype);
                     System.out.println("####총 클릭수 : " + wDays);
+                    intent.putExtra("workDays",wDays);
+                    intent.putExtra("bonus", bonus);
+                    intent.putExtra("payday", payday.getText().toString());
                     //intent.putExtra("resultType", type);
                     intent.putExtra("resultType", contracttype);
                      startActivity(intent);
@@ -333,7 +339,21 @@ public class setImageActivity extends AppCompatActivity{
 
 
 
+            }
 
+            if(resultText[i].contains("상여금")){
+                String bonusCheck = resultText[i];
+                if(bonusCheck.contains("V")||bonusCheck.contains("v"))
+                    bonus = false;
+                else
+                    bonus = true;
+            }
+
+            if(resultText[i].contains("지급일")&&contracttype==100){
+
+                rPayday = resultText[i].substring(22,27);
+                rPayday.replace("/","1");
+                payday.setText(rPayday);
             }
 
             /*
@@ -491,8 +511,22 @@ public class setImageActivity extends AppCompatActivity{
                 // System.out.println(eName);
             }
 */
+            if(resultText[i].contains("상여금")){
+                String bonusCheck = resultText[i];
+                if(bonusCheck.contains("V")||bonusCheck.contains("v"))
+                    bonus = false;
+                else
+                    bonus = true;
+            }
 
-        }
+            // 임금 지급일 찾고 텍스트에 띄우기
+            if(resultText[i].contains("지급일")&&contracttype==200){
+
+                rPayday = resultText[i].substring(21,23);
+                payday.setText(rPayday);
+            }
+
+        }// 청소년 근로 계약서 end
 
         // 일용직근로-문정인
         for (int j=0;j<resultText.length;j++) {
