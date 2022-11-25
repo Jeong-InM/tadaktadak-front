@@ -150,7 +150,7 @@ public class setImageActivity extends AppCompatActivity {
                 setImageActivity.this.convertImagetoText(uri);
                 Log.v("tag", "successT");
             }
-        }, 1000L);
+        }, 5000L);
 
         buttonSave = (Button) findViewById(R.id.button_save);
         buttoncheck = (Button) findViewById(R.id.button_check);
@@ -209,7 +209,7 @@ public class setImageActivity extends AppCompatActivity {
                                                                     }
                                                                 }
 
-                        , 3000);
+                        , 5000);
 
 
             }
