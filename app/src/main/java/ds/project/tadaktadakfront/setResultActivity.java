@@ -74,8 +74,15 @@ public class setResultActivity extends AppCompatActivity {
             bonus = "없음";
         // set like  %1$s in string.xml
 
+//        //일당
+//        int dailypay = result.getIntExtra("dailypay",0);
+
+
+
         // 임금지급날
         String payday = result.getStringExtra("payday");
+
+        String salary = result.getStringExtra("salary");
 
         if(resultType == 100){
             analysisResult.setText("정규직 근로 계약서");
@@ -87,6 +94,13 @@ public class setResultActivity extends AppCompatActivity {
             analysisResult.setText("청소년 근로 계약서");
             analysisReason.setText(getString(R.string.underage,payday,workDays,bonus));
         }
+
+
+        if(resultType == 300){
+            analysisResult.setText("건설일용근로자 계약서");
+            analysisReason.setText(getString(R.string.building,payday,salary));
+        }
+
 
         // 결과가 없을경우
         else if(resultType == 0){
