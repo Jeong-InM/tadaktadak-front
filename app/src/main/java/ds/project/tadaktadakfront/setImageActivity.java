@@ -32,21 +32,12 @@ import ds.project.tadaktadakfront.contract.view.callback.ContractApplication;
 import kotlinx.coroutines.CoroutineScope;
 import kotlinx.coroutines.Dispatchers;
 
-<<<<<<< HEAD
 
-public class setImageActivity extends AppCompatActivity {
-
-
-    TextRecognizer recognizer =
-            TextRecognition.getClient(new KoreanTextRecognizerOptions.Builder().build());
-
-=======
 public class setImageActivity extends AppCompatActivity {
 
     TextRecognizer recognizer =
             TextRecognition.getClient(new KoreanTextRecognizerOptions.Builder().build());
 
->>>>>>> ba30e26b5a6adc203be12d5b1b5008e934f54304
     Handler handler = new Handler();
     public InputImage inputImage;
     String tempText; // 인식된 결과를 넣을 String
@@ -66,10 +57,7 @@ public class setImageActivity extends AppCompatActivity {
     public EditText start; // 근무 시작일
     public EditText salary; // 돈
     public EditText hours; // 근무시간
-<<<<<<< HEAD
-=======
     public EditText payday;
->>>>>>> ba30e26b5a6adc203be12d5b1b5008e934f54304
 
     String eName; // editText에 들어갈 상호명
     String rCpName; // editText에 들어갈 사업자
@@ -79,10 +67,7 @@ public class setImageActivity extends AppCompatActivity {
     String rStart; // editText에 들어갈 근무 시작일
     String rSalary; // editText에 들어갈 돈
     String rHours; // editText에 들어갈 근무시간
-<<<<<<< HEAD
-=======
     String rPayday; // editText에 들어갈 임금지급일
->>>>>>> ba30e26b5a6adc203be12d5b1b5008e934f54304
 
     // 근로시간용 체크박스
     CheckBox monCheckbox;
@@ -100,32 +85,21 @@ public class setImageActivity extends AppCompatActivity {
     // 근로요일을 저장할 변수
     int wDays;
 
-<<<<<<< HEAD
-    // 일하는 시간
-    int wHours;
-
-    // 판별에 필요한 변수 - 판별값마다 다른 값 준 후 intent로 넘기기
-    int contracttype = 0;
-=======
     //일당
     int dailypay;
 
     // 일하는 시간
     int wHours;
->>>>>>> ba30e26b5a6adc203be12d5b1b5008e934f54304
 
     // 판별에 필요한 변수 - 판별값마다 다른 값 준 후 intent로 넘기기
     int contracttype = 0;
 
-<<<<<<< HEAD
-=======
     // 상어금 여부 확인
     boolean bonus;
 
     //통장지급여부확인
     boolean tongjang;
 
->>>>>>> ba30e26b5a6adc203be12d5b1b5008e934f54304
     public class MainList {
         public String mName;
         public String mCategory;
@@ -149,18 +123,6 @@ public class setImageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_image);
 
-<<<<<<< HEAD
-        name = (EditText) findViewById(R.id.add_edittext_name);
-        cpName = (EditText) findViewById(R.id.add_edittext_cpName);  // 사업자명
-        enName = (EditText) findViewById(R.id.add_edittext_enName);
-        number = (EditText) findViewById(R.id.add_edittext_number); // 사업자 전화번호
-        address = (EditText) findViewById(R.id.add_edittext_address); // 사업자 주소
-        start = (EditText) findViewById(R.id.add_edittext_start); // 근무 시작일
-        salary = (EditText) findViewById(R.id.add_edittext_salary); // 돈
-        hours = (EditText) findViewById(R.id.add_edittext_hours);
-
-        //체크박스
-=======
         name = (EditText) findViewById(R.id.add_edittext_name); // 상호명
         cpName = (EditText) findViewById(R.id.add_edittext_cpName);  // 사업자명
         enName = (EditText) findViewById(R.id.add_edittext_enName); // 근로자 이름
@@ -171,38 +133,14 @@ public class setImageActivity extends AppCompatActivity {
         hours = (EditText) findViewById(R.id.add_edittext_hours);
         address = (EditText) findViewById(R.id.add_edittext_address);
 
->>>>>>> ba30e26b5a6adc203be12d5b1b5008e934f54304
         monCheckbox = (CheckBox) findViewById(R.id.monday);
         tueCheckbox = (CheckBox) findViewById(R.id.tuesday);
         wedCheckbox = (CheckBox) findViewById(R.id.wednesday);
         thuCheckbox = (CheckBox) findViewById(R.id.thursday);
         friCheckbox = (CheckBox) findViewById(R.id.friday);
-<<<<<<< HEAD
-        satCheckbox = (CheckBox) findViewById(R.id.saturday);
-        sunCheckbox = (CheckBox) findViewById(R.id.sunday);
-
-        if (monCheckbox.isChecked()) {
-            wDays++;
-        } else if (tueCheckbox.isChecked()) {
-            wDays++;
-        } else if (wedCheckbox.isChecked()) {
-            wDays++;
-        } else if (thuCheckbox.isChecked()) {
-            wDays++;
-        } else if (friCheckbox.isChecked()) {
-            wDays++;
-        } else if (satCheckbox.isChecked()) {
-            wDays++;
-        } else if (sunCheckbox.isChecked()) {
-            wDays++;
-        }
-
-
-=======
         satCheckbox = (CheckBox) findViewById(R.id.saturday); //
         sunCheckbox = (CheckBox) findViewById(R.id.sunday);
 
->>>>>>> ba30e26b5a6adc203be12d5b1b5008e934f54304
         String currentPhotoPath = this.getIntent().getStringExtra("path");
         final Uri uriSelected = Uri.parse(this.getIntent().getStringExtra("path"));
         File file = new File(currentPhotoPath);
@@ -218,54 +156,12 @@ public class setImageActivity extends AppCompatActivity {
                 setImageActivity.this.convertImagetoText(uri);
                 Log.v("tag", "successT");
             }
-<<<<<<< HEAD
-        }, 1000L);
-=======
         }, 5000L);
 
         buttonSave = (Button) findViewById(R.id.button_save);
         buttoncheck = (Button) findViewById(R.id.button_check);
 
-        //
->>>>>>> ba30e26b5a6adc203be12d5b1b5008e934f54304
 
-        buttoncheck = (Button) findViewById(R.id.button_check);
-        buttonSave = (Button)findViewById(R.id.button_save);
-
-<<<<<<< HEAD
-        /*buttoncheck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), setResultActivity.class);
-                intent.putExtra("resultEname", name.getText().toString());
-                System.out.println("type " + contracttype);
-                //intent.putExtra("resultType", type);
-                intent.putExtra("resultType", contracttype);
-                startActivity(intent);
-            }
-        });
-*/
-        buttonSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-
-                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Contract contract = new Contract();
-                        contract.setName(name.getText().toString());
-                        contract.setNumber(number.getText().toString());
-                        contract.setAddress(address.getText().toString());
-                        ContractApplication.db.contractDao().insert(contract);
-                        startActivity(intent);
-                        finish();
-                    }
-                }, 100L);
-            }
-        });
-    }// end onCreate
-=======
         buttoncheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -322,29 +218,33 @@ public class setImageActivity extends AppCompatActivity {
 
             }
         });
-
-
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.putExtra("name", name.getText().toString());
-                intent.putExtra("number", number.getText().toString());
-                intent.putExtra("address", address.getText().toString());
 
-                startActivity(intent);
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Contract contract = new Contract();
+                        contract.setName(name.getText().toString());
+                        contract.setNumber(number.getText().toString());
+                        contract.setAddress(address.getText().toString());
+                        ContractApplication.db.contractDao().insert(contract);
+                        startActivity(intent);
+                        finish();
+                    }
+                }, 100L);
             }
         });
+    }
 
 
-    } // end onCreate
 
     private final void convertImagetoText(Uri imageUri) {
         try {
 
             inputImage = InputImage.fromFilePath(this, imageUri);
->>>>>>> ba30e26b5a6adc203be12d5b1b5008e934f54304
-
             Task<Text> result =
                     recognizer.process(inputImage)
                             .addOnSuccessListener(new OnSuccessListener<Text>() {
