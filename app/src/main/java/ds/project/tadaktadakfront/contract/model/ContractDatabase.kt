@@ -20,8 +20,6 @@ abstract class ContractDatabase: RoomDatabase() {
             super.onCreate(db)
             INSTANCE?.let { database ->
                 scope.launch {
-                    var contractDao = database.contractDao()
-                    contractDao.deleteAll()
                 }
             }
         }
@@ -29,15 +27,14 @@ abstract class ContractDatabase: RoomDatabase() {
 
     companion object {
         private var INSTANCE: ContractDatabase? = null
-
-        // 여러 스레드가 접근하지 못하도록 synchronized로 설정
         fun getDatabase(context: Context, scope: CoroutineScope): ContractDatabase? {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     ContractDatabase::class.java,
                     "contract"
-                ).addCallback(ContractDatabaseCallback(scope)) // build 전 콜백 추가
+                ).allowMainThreadQueries()
+                    .addCallback(ContractDatabaseCallback(scope)) // build 전 콜백 추가
                     .build()
                 INSTANCE = instance
                 instance

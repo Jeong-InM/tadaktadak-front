@@ -7,13 +7,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ContractDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(contract: Contract)
+    fun insert(contact: Contract)
 
     @Delete
-    suspend fun delete(contract: Contract)
-
-    @Query("DELETE FROM contract")
-    suspend fun deleteAll()
+    suspend fun delete(contact: Contract)
 
     @Query("SELECT * FROM contract ORDER BY name ASC")
     fun getAll(): Flow<List<Contract>>

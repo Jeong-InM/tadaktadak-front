@@ -47,168 +47,181 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import ds.project.tadaktadakfront.contract.model.ContractDatabase;
+import ds.project.tadaktadakfront.contract.model.entity.Contract;
+import ds.project.tadaktadakfront.contract.view.callback.ContractApplication;
+import kotlinx.coroutines.CoroutineScope;
+import kotlinx.coroutines.Dispatchers;
 
-public class setImageActivity extends AppCompatActivity{
 
-        TextRecognizer recognizer =
-                TextRecognition.getClient(new KoreanTextRecognizerOptions.Builder().build());
+public class setImageActivity extends AppCompatActivity {
 
-        Handler handler = new Handler();
-        public InputImage inputImage;
-        String tempText; // 인식된 결과를 넣을 String
-        String[] resultText;// 인식된 결과를 parsing후 분석할 String Array
+
+    TextRecognizer recognizer =
+            TextRecognition.getClient(new KoreanTextRecognizerOptions.Builder().build());
+
+    Handler handler = new Handler();
+    public InputImage inputImage;
+    String tempText; // 인식된 결과를 넣을 String
+    String[] resultText;// 인식된 결과를 parsing후 분석할 String Array
 
     public ArrayList<String> item = new ArrayList<String>();
     public ArrayList<String> typeitem = new ArrayList<String>();
     public ArrayList<MainList> mainLists = new ArrayList<MainList>();
 
 
-        //나오는 결과 edittext
-        public EditText name;
-        public EditText cpName; // 사업자 명
-        public EditText enName;  // 근로자 이름
-        public EditText number; // 전화번호
-        public EditText address; // 사업자 주소
-        public EditText start; // 근무 시작일
-        public EditText salary; // 돈
-        public EditText hours; // 근무시간
+    //나오는 결과 edittext
+    public EditText name;
+    public EditText cpName; // 사업자 명
+    public EditText enName;  // 근로자 이름
+    public EditText number; // 전화번호
+    public EditText address; // 사업자 주소
+    public EditText start; // 근무 시작일
+    public EditText salary; // 돈
+    public EditText hours; // 근무시간
 
-        String eName; // editText에 들어갈 상호명
-        String rCpName; // editText에 들어갈 사업자
-        String rEnName; // editText에 들어갈 근로자 주소
-        String rNumber ; // editText에 들어갈 사업자 번호
-        String rAddress; // editText에 들어갈 사업자 주소
-        String rStart; // editText에 들어갈 근무 시작일
-        String rSalary; // editText에 들어갈 돈
-        String rHours; // editText에 들어갈 근무시간
+    String eName; // editText에 들어갈 상호명
+    String rCpName; // editText에 들어갈 사업자
+    String rEnName; // editText에 들어갈 근로자 주소
+    String rNumber; // editText에 들어갈 사업자 번호
+    String rAddress; // editText에 들어갈 사업자 주소
+    String rStart; // editText에 들어갈 근무 시작일
+    String rSalary; // editText에 들어갈 돈
+    String rHours; // editText에 들어갈 근무시간
 
-        // 근로시간용 체크박스
-        CheckBox monCheckbox;
-        CheckBox tueCheckbox;
-        CheckBox wedCheckbox;
-        CheckBox thuCheckbox;
-        CheckBox friCheckbox;
-        CheckBox satCheckbox;
-        CheckBox sunCheckbox;
+    // 근로시간용 체크박스
+    CheckBox monCheckbox;
+    CheckBox tueCheckbox;
+    CheckBox wedCheckbox;
+    CheckBox thuCheckbox;
+    CheckBox friCheckbox;
+    CheckBox satCheckbox;
+    CheckBox sunCheckbox;
 
-        // 저장후 다음 액티비티로 넘어가게 해주는 버튼
-        Button buttonSave;
-        Button buttoncheck;
+    // 저장후 다음 액티비티로 넘어가게 해주는 버튼
+    Button buttonSave;
+    Button buttoncheck;
 
-        // 근로요일을 저장할 변수
-        int wDays;
+    // 근로요일을 저장할 변수
+    int wDays;
 
-        // 일하는 시간
-        int wHours;
+    // 일하는 시간
+    int wHours;
 
-        // 판별에 필요한 변수 - 판별값마다 다른 값 준 후 intent로 넘기기
-        int contracttype = 0;
+    // 판별에 필요한 변수 - 판별값마다 다른 값 준 후 intent로 넘기기
+    int contracttype = 0;
 
 
-    public class MainList{
+    public class MainList {
         public String mName;
         public String mCategory;
-        public MainList(String name, String category){
+
+        public MainList(String name, String category) {
             this.mName = name;
             this.mCategory = category;
         }
-        public String getmName() { return mName; }
-        public String getmCategory() { return mCategory; }
+
+        public String getmName() {
+            return mName;
+        }
+
+        public String getmCategory() {
+            return mCategory;
+        }
     }
 
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_set_image);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_set_image);
 
-            name = (EditText)findViewById(R.id.add_edittext_name);
-            cpName = (EditText)findViewById(R.id.add_edittext_cpName);  // 사업자명
-            enName = (EditText)findViewById(R.id.add_edittext_enName);
-            number = (EditText)findViewById(R.id.add_edittext_number); // 사업자 전화번호
-            address = (EditText)findViewById(R.id.add_edittext_address); // 사업자 주소
-            start = (EditText)findViewById(R.id.add_edittext_start); // 근무 시작일
-            salary = (EditText)findViewById(R.id.add_edittext_salary); // 돈
-            hours = (EditText)findViewById(R.id.add_edittext_hours);
+        name = (EditText) findViewById(R.id.add_edittext_name);
+        cpName = (EditText) findViewById(R.id.add_edittext_cpName);  // 사업자명
+        enName = (EditText) findViewById(R.id.add_edittext_enName);
+        number = (EditText) findViewById(R.id.add_edittext_number); // 사업자 전화번호
+        address = (EditText) findViewById(R.id.add_edittext_address); // 사업자 주소
+        start = (EditText) findViewById(R.id.add_edittext_start); // 근무 시작일
+        salary = (EditText) findViewById(R.id.add_edittext_salary); // 돈
+        hours = (EditText) findViewById(R.id.add_edittext_hours);
 
-            //체크박스
-            monCheckbox = (CheckBox)findViewById(R.id.monday);
-            tueCheckbox =  (CheckBox)findViewById(R.id.tuesday);
-            wedCheckbox =  (CheckBox)findViewById(R.id.wednesday);
-            thuCheckbox =  (CheckBox)findViewById(R.id.thursday);
-            friCheckbox =  (CheckBox)findViewById(R.id.friday);
-            satCheckbox =  (CheckBox)findViewById(R.id.saturday);
-            sunCheckbox =  (CheckBox)findViewById(R.id.sunday);
+        //체크박스
+        monCheckbox = (CheckBox) findViewById(R.id.monday);
+        tueCheckbox = (CheckBox) findViewById(R.id.tuesday);
+        wedCheckbox = (CheckBox) findViewById(R.id.wednesday);
+        thuCheckbox = (CheckBox) findViewById(R.id.thursday);
+        friCheckbox = (CheckBox) findViewById(R.id.friday);
+        satCheckbox = (CheckBox) findViewById(R.id.saturday);
+        sunCheckbox = (CheckBox) findViewById(R.id.sunday);
 
-            if(monCheckbox.isChecked()){
-                wDays++;
+        if (monCheckbox.isChecked()) {
+            wDays++;
+        } else if (tueCheckbox.isChecked()) {
+            wDays++;
+        } else if (wedCheckbox.isChecked()) {
+            wDays++;
+        } else if (thuCheckbox.isChecked()) {
+            wDays++;
+        } else if (friCheckbox.isChecked()) {
+            wDays++;
+        } else if (satCheckbox.isChecked()) {
+            wDays++;
+        } else if (sunCheckbox.isChecked()) {
+            wDays++;
+        }
+
+
+        String currentPhotoPath = this.getIntent().getStringExtra("path");
+        final Uri uriSelected = Uri.parse(this.getIntent().getStringExtra("path"));
+        File file = new File(currentPhotoPath);
+        Uri uri = Uri.fromFile(file);
+
+        Log.v("tag", "successI");
+
+        // 2초후 다음 액티비티로 넘김
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                setImageActivity.this.convertImagetoText(uriSelected);
+                setImageActivity.this.convertImagetoText(uri);
+                Log.v("tag", "successT");
             }
-            else if (tueCheckbox.isChecked()){
-                wDays++;
-            }
-            else if (wedCheckbox.isChecked()){
-                wDays++;
-            }
-            else if (thuCheckbox.isChecked()){
-                wDays++;
-            }
-            else if (friCheckbox.isChecked()){
-                wDays++;
-            }
-            else if (satCheckbox.isChecked()){
-                wDays++;
-            }
-            else if (sunCheckbox.isChecked()){
-                wDays++;
-            }
+        }, 1000L);
 
+        buttoncheck = (Button) findViewById(R.id.button_check);
+        buttonSave = (Button)findViewById(R.id.button_save);
 
-            String currentPhotoPath = this.getIntent().getStringExtra("path");
-            final Uri uriSelected = Uri.parse(this.getIntent().getStringExtra("path"));
-            File file = new File(currentPhotoPath);
-            Uri uri = Uri.fromFile(file);
-
-            Log.v("tag", "successI");
-
-            // 2초후 다음 액티비티로 넘김
-            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    setImageActivity.this.convertImagetoText(uriSelected);
-                    setImageActivity.this.convertImagetoText(uri);
-                    Log.v("tag", "successT");
-                }
-            },1000L);
-
-            buttonSave = (Button)findViewById(R.id.button_save);
-            buttoncheck = (Button)findViewById(R.id.button_check);
-            buttoncheck.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent  = new Intent(getApplicationContext(), setResultActivity.class);
-                    intent.putExtra("resultEname",name.getText().toString());
-                    System.out.println("type "+contracttype);
-                    //intent.putExtra("resultType", type);
-                    intent.putExtra("resultType", contracttype);
-                     startActivity(intent);
-                }
-            });
-
-            buttonSave.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.putExtra("name", name.getText().toString());
-                intent.putExtra("number", number.getText().toString());
-                intent.putExtra("address", address.getText().toString() );
-
+        /*buttoncheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), setResultActivity.class);
+                intent.putExtra("resultEname", name.getText().toString());
+                System.out.println("type " + contracttype);
+                //intent.putExtra("resultType", type);
+                intent.putExtra("resultType", contracttype);
                 startActivity(intent);
-                }
-            });
+            }
+        });
+*/
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 
-
-
-
-        } // end onCreate
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Contract contract = new Contract();
+                        contract.setName(name.getText().toString());
+                        contract.setNumber(number.getText().toString());
+                        contract.setAddress(address.getText().toString());
+                        ContractApplication.db.contractDao().insert(contract);
+                        startActivity(intent);
+                        finish();
+                    }
+                }, 100L);
+            }
+        });
+    }// end onCreate
 
         private final void convertImagetoText(Uri imageUri) {
             try {

@@ -12,4 +12,14 @@ class ContractApplication : Application() {
 
     val database by lazy { ContractDatabase.getDatabase(this, applicationScope) }
     val repository by lazy { ContractRepository(database!!.contractDao()) }
+
+    companion object {
+        @JvmField
+        var db: ContractDatabase? = null
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        db = ContractDatabase.getDatabase(this, applicationScope)
+    }
 }
