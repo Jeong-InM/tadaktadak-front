@@ -7,7 +7,7 @@
     tools:context=".setImageActivity">
 
     <LinearLayout
-        android:paddingTop="112dp"
+        android:paddingTop="80dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -173,6 +173,28 @@
                 android:id="@+id/add_edittext_salary"
                 android:backgroundTint="@color/purple_200"/>
         </LinearLayout>
+        <!--급여 salary!-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:text="임금지급일"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/add_tv_payday"
+                android:layout_marginStart="32dp"
+                android:background="@color/purple_700"
+                android:textColor="@color/white"/>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/add_edittext_payday"
+                android:backgroundTint="@color/purple_200"/>
+        </LinearLayout>
 
         <!--근로시간 hours!-->
         <LinearLayout
@@ -271,7 +293,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/button_resource"
-        android:text="check"
+        android:text="판별하기"
         android:layout_margin="@dimen/big_padding"
         android:textColor="@color/buttonLabel"/>
     <androidx.appcompat.widget.AppCompatButton

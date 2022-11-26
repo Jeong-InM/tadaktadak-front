@@ -30,8 +30,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import ds.project.tadaktadakfront.contract.*
 import ds.project.tadaktadakfront.contract.model.entity.Contract
 import ds.project.tadaktadakfront.contract.view.adapter.ContractAdapter
+import ds.project.tadaktadakfront.contract.view.callback.ContractApplication.Companion.db
 import kotlinx.android.synthetic.main.fragment_navi_contract_collection.*
 import kotlinx.android.synthetic.main.fragment_navi_contract_collection.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.apache.poi.hssf.usermodel.HSSFCell
 import org.apache.poi.hssf.usermodel.HSSFRow
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
@@ -50,60 +55,68 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class NaviContractCollection : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
     private val workBook = HSSFWorkbook()
     private val WRITE_XLS_REQ_CODE = 1000
 
-    var name = ""
-    var number = ""
-    var address = ""
-
-
     lateinit var mainActivity: MainActivity
+    private val newcontactActivityRequestCode = 1
+
+    private lateinit var recyclerView : RecyclerView
+    private lateinit var btnAllList: AppCompatButton
+    private lateinit var btnAdd: FloatingActionButton
+    private lateinit var adapter: ContractAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_navi_contract_collection, container, false)
 
-        val btnAllList: AppCompatButton = view.findViewById(R.id.btn_all_list)
-        val recyclerView: RecyclerView = view.findViewById(R.id.contact_recyclerview)
-        val adapter = ContractAdapter()
+        return inflater.inflate(R.layout.fragment_navi_contract_collection, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initView()
+        initListener()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        getContactList()
+    }
+
+    private fun initView() {
+        btnAllList = requireView().findViewById(R.id.btn_all_list)
+        btnAdd = requireView().findViewById(R.id.add_button)
+        recyclerView = requireView().findViewById(R.id.contact_recyclerview)
+        adapter = ContractAdapter()
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(activity?.applicationContext)
+    }
 
-        name = requireActivity().intent.getStringExtra("name").toString()
-        number = requireActivity().intent.getStringExtra("number").toString()
-        address = requireActivity().intent.getStringExtra("address").toString()
-
-        adapter.submitList(arrayListOf(Contract(null, name, number, address)))
-
+    private fun initListener() {
         btnAllList.setOnClickListener {
             saveExcel()
         }
+        btnAdd.setOnClickListener {
+            startActivity(Intent(requireActivity(), NewContractActivity::class.java))
+        }
+    }
 
-        view.add_button.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(p0: View?) {
-                val add = getView()?.findViewById<FloatingActionButton>(R.id.add_button)
-                add?.setOnClickListener {
-                    val intent = Intent(activity, NewContractActivity::class.java)
-                    startActivity(intent)
+    private fun getContactList() {
+        CoroutineScope(Dispatchers.IO).launch {
+            db?.contractDao()?.getAll()?.collect {
+
+                withContext(Dispatchers.Main) {
+                    adapter.submitList(it)
                 }
             }
-        })
-        return view
+        }
     }
 
     private fun saveExcel() {
@@ -117,83 +130,66 @@ class NaviContractCollection : Fragment() {
         // 1번 셀 생성
         cell = row.createCell(0)
         // 1번 셀 값 입력
-        cell.setCellValue("상호명")
+        cell.setCellValue("이름")
         // 2번 셀 생성
         cell = row.createCell(1)
         // 2번 셀 값 입력
-        cell.setCellValue("회사번호")
+        cell.setCellValue("전화번호")
         // 3번 셀 생성
         cell = row.createCell(2)
         // 3번 셀 값 입력
-        cell.setCellValue("회사주소")
+        cell.setCellValue("주소")
 
-        // 새로운 행 생성
-        row = sheet.createRow(1)
+        val contactList = adapter.currentList as List<Contract>
 
-        // 1번 셀 생성
-        cell = row.createCell(0)
-        cell.setCellValue(name)
-        // 2번 셀 생성
-        cell = row.createCell(1)
-        cell.setCellValue(number)
-        // 3번 셀 생성
-        cell = row.createCell(2)
-        cell.setCellValue(address)
+        contactList.forEachIndexed { index, contract ->
+
+            // 새로운 행 생성
+            row = sheet.createRow(index + 1)
+
+            // 1번 셀 생성
+            cell = row.createCell(0)
+            cell.setCellValue(contract.name)
+            // 2번 셀 생성
+            cell = row.createCell(1)
+            cell.setCellValue(contract.number)
+            // 3번 셀 생성
+            cell = row.createCell(2)
+            cell.setCellValue(contract.address)
+        }
 
         startActivityForResult(Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
             addCategory(Intent.CATEGORY_OPENABLE)
             type = "application/xls"
-            putExtra(Intent.EXTRA_TITLE, "근로내역추출.xls")
+            putExtra(Intent.EXTRA_TITLE, "근로내역.xls")
         }, WRITE_XLS_REQ_CODE)
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (resultCode == RESULT_OK) {
+        if(resultCode == RESULT_OK) {
 
-            when (requestCode) {
+            when(requestCode) {
                 WRITE_XLS_REQ_CODE -> {
                     data?.data?.let { uri ->
                         val pfd = requireContext().contentResolver.openFileDescriptor(uri, "w");
                         val os = FileOutputStream(pfd?.fileDescriptor)
                         workBook.write(os)
-                        Toast.makeText(requireContext(), "근로내역이 저장되었습니다.", Toast.LENGTH_SHORT)
-                            .show()
+                        Toast.makeText(requireContext(), "근로 내역이 저장되었습니다.", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
-        } else {
-            Toast.makeText(requireContext(), "근로내역 파일 생성에 실패하였습니다.", Toast.LENGTH_SHORT).show()
         }
     }
 
-
     override fun onAttach(context: Context) { //메인 context 자유롭게 사용
         super.onAttach(context)
-        mainActivity = context as MainActivity
+        mainActivity= context as MainActivity
     }
 
-
     companion object {
-
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment NaviContractCollection.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            NaviContractCollection().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        fun newInstance() = NaviContractCollection()
     }
 }

@@ -6,6 +6,11 @@ import android.text.TextUtils
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import ds.project.tadaktadakfront.contract.model.entity.Contract
+import ds.project.tadaktadakfront.contract.view.callback.ContractApplication
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class NewContractActivity:AppCompatActivity() {
 
@@ -25,16 +30,15 @@ class NewContractActivity:AppCompatActivity() {
         saveButton = findViewById(R.id.btn_save)
 
         saveButton.setOnClickListener {
-            if (!TextUtils.isEmpty(numberEditText.text)) {
-                val name = nameEditText.text.toString()
-                val number = numberEditText.text.toString()
-                val address = addressEditText.text.toString()
 
-                startActivity(Intent(this, MainActivity::class.java).apply {
-                    putExtra("name", name)
-                    putExtra("number", number)
-                    putExtra("address", address)
-                })
+            CoroutineScope(Dispatchers.IO).launch {
+                val contact = Contract().apply {
+                    name = nameEditText.text.toString()
+                    number = numberEditText.text.toString()
+                    address = addressEditText.text.toString()
+                }
+                ContractApplication.db?.contractDao()?.insert(contact)
+                finish()
             }
         }
     }

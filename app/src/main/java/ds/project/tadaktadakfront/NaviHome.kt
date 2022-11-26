@@ -351,11 +351,15 @@ class NaviHome : Fragment() {
 
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         var imgFileName = "IMAGE_" + timeStamp + "_.jpg"
-        var storageRef = fbStorage?.reference?.child("images")?.child(imgFileName)
 
+        //11-16
+        /*
         storageRef?.putFile(uri!!)?.addOnSuccessListener {
+
             Toast.makeText(view.context, "Image Uploaded", Toast.LENGTH_SHORT).show()
         }
+*/
+        var storageRef = fbStorage?.reference?.child("images")?.child(imgFileName)
 
     }
 

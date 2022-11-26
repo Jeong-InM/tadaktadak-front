@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,6 +31,8 @@ public class NaviChatbot extends Fragment {
                 Intent intent = new Intent(getActivity(), ChatbotActivity.class); //fragment라서 activity intent와는 다른 방식
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
+                Toast toast = Toast.makeText(getActivity(), "챗봇에게 먼저 인사해보세요.", Toast.LENGTH_LONG);
+                toast.show();
             }
         });
         return view;
