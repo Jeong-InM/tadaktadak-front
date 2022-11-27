@@ -4,6 +4,8 @@ package ds.project.tadaktadakfront;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -98,7 +100,10 @@ public class setResultActivity extends AppCompatActivity {
 
         if(resultType == 300){
             analysisResult.setText("건설일용근로자 계약서");
-            analysisReason.setText(getString(R.string.building,payday,salary));
+            String building = getString(R.string.building, payday, salary);
+            Spanned spanned = Html.fromHtml(building);
+            analysisReason.setText(spanned);
+            //analysisReason.setText(getString(R.string.building,payday,salary));
         }
 
 

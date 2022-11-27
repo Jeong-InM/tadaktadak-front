@@ -39,7 +39,7 @@
 
     <string name="regular">월 임금 지급일 -  %1$s\n매주 %2$d 일 근무\n휴게시간 30 분 \n상여금  %3$s\n시급 이 2022년 최저시급 이하 입니다. \n다시 확인해주세요. </string>
 
-    <string name="building">임금 지급일 -  %1$s\n휴게시간 1시간 30 분 \n일급 %2$s 입니다. \n1일 근로자는 산재보험과 고용보험 가입이 필수입니다.\n계약서와 대조해보세요.\n </string>
+    <string name="building">임금 지급일 -  %1$s\n휴게시간 1시간 30 분 \n일급 %2$s 입니다. \n<![CDATA[<b><font color=#FF0000>1일 근로자는 산재보험과 고용보험 가입이 필수입니다.\n</font></b>]]>\n계약서와 대조해보세요.\n </string>
 
     <string-array name="okornot">
         <item>alert</item>
